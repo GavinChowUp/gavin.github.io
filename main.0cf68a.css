@@ -673,3 +673,10 @@ to{transform:rotate(0)}
 .pswp__error-msg{position:absolute;left:0;top:50%;width:100%;text-align:center;font-size:14px;line-height:1pc;margin-top:-8px;color:#ccc}
 .pswp__error-msg a{color:#ccc;text-decoration:underline}
 .article-inner h1.article-title_code_ant,.article-title_code_ant{color:#000;margin-left:0;font-weight:300;line-height:35px;margin-bottom:20px;font-size:2pc;transition:color .3s}
+
+.nav-total {
+	font-size: 10px;
+	color: #696969;
+	width:100%;
+	padding-top: 50%
+  }
