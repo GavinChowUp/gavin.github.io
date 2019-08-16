@@ -6,22 +6,16 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://github.com/GavinChowUp/gavin.github.io">
-  <title>【实现模式】状态 | Gavin&#39;s Blog</title>
+  <title>Gavin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="（摄于2014年5月南京夫子庙秦淮河）">
-<meta name="keywords" content="实现模式">
-<meta property="og:type" content="article">
-<meta property="og:title" content="【实现模式】状态">
-<meta property="og:url" content="https://github.com/GavinChowUp/gavin.github.io/2019/08/09/【实现模式】状态/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Gavin&#39;s Blog">
+<meta property="og:url" content="https://github.com/GavinChowUp/gavin.github.io/2019/08/13/【分布式系统】/index.html">
 <meta property="og:site_name" content="Gavin&#39;s Blog">
-<meta property="og:description" content="（摄于2014年5月南京夫子庙秦淮河）">
 <meta property="og:locale" content="zh-CH">
-<meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-072303.png">
-<meta property="og:updated_time" content="2019-08-12T06:08:42.215Z">
+<meta property="og:updated_time" content="2019-08-13T01:29:57.123Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【实现模式】状态">
-<meta name="twitter:description" content="（摄于2014年5月南京夫子庙秦淮河）">
-<meta name="twitter:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-072303.png">
+<meta name="twitter:title" content="Gavin&#39;s Blog">
   
     <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
   
@@ -161,116 +155,18 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-【实现模式】状态" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-【分布式系统】" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        <!-- 
-  
-    <h1 class="article-title" itemprop="name">
-      【实现模式】状态
-    </h1>
-  
- -->
-        
-        <a href="/gavin.github.io/2019/08/09/【实现模式】状态/" class="archive-article-date">
-  	<time datetime="2019-08-09T06:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
-</a>
-        
-      </header>
     
     
     <div class="article-entry" itemprop="articleBody">
         <!--  -->
-        <center><p>
-  
-    <h1 class="article-title_code_ant" itemprop="name">
-      【实现模式】状态
-    </h1>
-  
-</p></center>
+        <center><p></p></center>
         <div align="center" class="post-count">
-            📝：775 字 | 🕝：2分钟
+            📝：0 字 | 🕝：1分钟
         </div>
       
-        <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-072303.png" alt="image-20190809152302445"></p>
-<center>（摄于2014年5月南京夫子庙秦淮河）</center>
-
-<a id="more"></a>
-
-<h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><p>对象方便的包装了行为和状态，前者曝露给外部世界，后者为前者提供支持</p>
-<h3 id="关于状态的模式"><a href="#关于状态的模式" class="headerlink" title="关于状态的模式"></a>关于状态的模式</h3><ul>
-<li>状态：使用可变的值进行计算<ul>
-<li>把相似的状态放在一起，确保不通的状态彼此分离</li>
-</ul>
-</li>
-<li>访问：限制对状态的访问，从而保持灵活性</li>
-<li>直接访问：直接访问对象的内部状态</li>
-<li>间接访问：通过方法来访问状态，从而提高灵活性</li>
-</ul>
-<blockquote>
-<p>默认的访问策略是: 允许在类中直接访问，其它的使用者必须间接访问</p>
-<p>当两项数据彼此够合适，无疑应该使用间接访问，例如更新一个字段的同时去修改另一个字段</p>
-</blockquote>
-<ul>
-<li><p>通用状态：把状态保存在字段汇总，使得该类的所有对象都拥有这些状态</p>
-</li>
-<li><p>可变状态：如果各个实例拥有不通的状态，那么将这些状态放入一个map，并将map保存在实例变量中</p>
-<ul>
-<li>如果遇到一个字段的状态决定了同一个对象中是否需要其它字段，这种情况下就应当使用可变状态</li>
-</ul>
-</li>
-<li><p>外生状态：某些特殊用途的状态放入一个map,并由状态的使用者负责保存</p>
-</li>
-<li><p>变量：提供了访问状态的命名空间</p>
-<ul>
-<li><p>局部变量: 只能在当前的作用域</p>
-<ul>
-<li><p>收集器：用来收集稍后需要的信息，经常作为返回值传出，如果需要返回，命名为result</p>
-</li>
-<li><p>计数：专门用于记录某些其它对象的个数</p>
-</li>
-<li><p>解释：如果有一个复杂的表达式，可把其一部分结果赋值给一个局部变量</p>
-<ul>
-<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> Rectangle(top,left,height,width)</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>复用：表达式中的值会不断变化，而又多次需要使用同一个值</p>
-<ul>
-<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Clock each: getClocks())&#123;</span><br><span class="line">	 each.setTime(CurrentTimeMills())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>元素：</p>
-</li>
-</ul>
-</li>
-<li><p>字段：对象内的任何地方访问</p>
-<ul>
-<li>选择把字段声明为final,以此告诉阅读者，构造函数执行完之后，就不能再改变这个字段的值</li>
-</ul>
-</li>
-<li><p>静态变量：该类的所有对象度可以访问</p>
-</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>容纳多个值的变量，例如集合，应该是复数形式</p>
-</blockquote>
-<ul>
-<li>参数：参数在一个方法被调用指出描述当时的状态</li>
-<li>传入一个参数，用于收集来自多个方法 的复杂结果</li>
-<li>参数对象：把常用的长参数列表打包成一个对象</li>
-<li>常量：不变的状态应该保存为常量</li>
-<li>按角色命名：根据变量在计算中扮演的角色为他们命名</li>
-<li>声明时的类型：为变量声明一个尽可能通用的类型</li>
-<li>初始化：尽可能以声明性的方式对变量进行初始化</li>
-<li>及早初始化：在创建实例的同时初始化字段</li>
-<li>延迟初始化：如果字段的求值动作开销高昂，可以考虑在第一次使用之前才初始化</li>
-</ul>
-
+        
       
 
       
@@ -299,17 +195,6 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实现模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
 
       
@@ -360,7 +245,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://github.com/GavinChowUp/gavin.github.io/2019/08/09/【实现模式】状态/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://github.com/GavinChowUp/gavin.github.io/2019/08/13/【分布式系统】/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -374,18 +259,18 @@
   
 <nav id="article-nav">
   
-    <a href="/gavin.github.io/2019/08/11/【Java基础】反射&动态代理/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/gavin.github.io/2019/08/13/【高并发架构】/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          【Java基础】反射&amp;动态代理
+          (no title)
         
       </div>
     </a>
   
   
-    <a href="/gavin.github.io/2019/08/09/【实现模式】类/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【实现模式】类</div>
+    <a href="/gavin.github.io/2019/08/13/【自己动手系列】/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -412,7 +297,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#状态"><span class="toc-number">1.</span> <span class="toc-text">状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于状态的模式"><span class="toc-number">2.</span> <span class="toc-text">关于状态的模式</span></a></li></ol>
+                    目录，不存在的…
                     </div>
                 </span>
             </div>

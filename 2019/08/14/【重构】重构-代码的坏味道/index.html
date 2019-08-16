@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="https://github.com/GavinChowUp/gavin.github.io">
-  <title>【实现模式】状态 | Gavin&#39;s Blog</title>
+  <title>【重构】重构-代码的坏味道 | Gavin&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="（摄于2014年5月南京夫子庙秦淮河）">
-<meta name="keywords" content="实现模式">
+  <meta name="description" content="最近参加了前TW大佬熊节发起的TDD训练营，其第二章节Args中参考资料有《重构》-第三章，买《重构》已久，一直未细细研读，翻开第三章，正如其读者评论：  处于金字塔顶端的书不多，而这本书恰恰就是，很幸运我看到了它。  曾经一直在思考一个问题，多读书是好事，可苦于现工作压力，家庭陪伴，是否老了会后悔年轻时读书少了，抉择能力差了，甚至会不满于未来的生活状态，而今天，找到了醍醐灌顶的答案，尤其是读了《">
+<meta name="keywords" content="重构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="【实现模式】状态">
-<meta property="og:url" content="https://github.com/GavinChowUp/gavin.github.io/2019/08/09/【实现模式】状态/index.html">
+<meta property="og:title" content="【重构】重构-代码的坏味道">
+<meta property="og:url" content="https://github.com/GavinChowUp/gavin.github.io/2019/08/14/【重构】重构-代码的坏味道/index.html">
 <meta property="og:site_name" content="Gavin&#39;s Blog">
-<meta property="og:description" content="（摄于2014年5月南京夫子庙秦淮河）">
+<meta property="og:description" content="最近参加了前TW大佬熊节发起的TDD训练营，其第二章节Args中参考资料有《重构》-第三章，买《重构》已久，一直未细细研读，翻开第三章，正如其读者评论：  处于金字塔顶端的书不多，而这本书恰恰就是，很幸运我看到了它。  曾经一直在思考一个问题，多读书是好事，可苦于现工作压力，家庭陪伴，是否老了会后悔年轻时读书少了，抉择能力差了，甚至会不满于未来的生活状态，而今天，找到了醍醐灌顶的答案，尤其是读了《">
 <meta property="og:locale" content="zh-CH">
-<meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-072303.png">
-<meta property="og:updated_time" content="2019-08-12T06:08:42.215Z">
+<meta property="og:updated_time" content="2019-08-15T09:51:33.912Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="【实现模式】状态">
-<meta name="twitter:description" content="（摄于2014年5月南京夫子庙秦淮河）">
-<meta name="twitter:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-072303.png">
+<meta name="twitter:title" content="【重构】重构-代码的坏味道">
+<meta name="twitter:description" content="最近参加了前TW大佬熊节发起的TDD训练营，其第二章节Args中参考资料有《重构》-第三章，买《重构》已久，一直未细细研读，翻开第三章，正如其读者评论：  处于金字塔顶端的书不多，而这本书恰恰就是，很幸运我看到了它。  曾经一直在思考一个问题，多读书是好事，可苦于现工作压力，家庭陪伴，是否老了会后悔年轻时读书少了，抉择能力差了，甚至会不满于未来的生活状态，而今天，找到了醍醐灌顶的答案，尤其是读了《">
   
     <link rel="alternative" href="/atom.xml" title="Gavin&#39;s Blog" type="application/atom+xml">
   
@@ -161,20 +159,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-【实现模式】状态" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-【重构】重构-代码的坏味道" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 class="article-title" itemprop="name">
-      【实现模式】状态
+      【重构】重构-代码的坏味道
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/08/09/【实现模式】状态/" class="archive-article-date">
-  	<time datetime="2019-08-09T06:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
+        <a href="/gavin.github.io/2019/08/14/【重构】重构-代码的坏味道/" class="archive-article-date">
+  	<time datetime="2019-08-14T06:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
 </a>
         
       </header>
@@ -185,91 +183,143 @@
         <center><p>
   
     <h1 class="article-title_code_ant" itemprop="name">
-      【实现模式】状态
+      【重构】重构-代码的坏味道
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：775 字 | 🕝：2分钟
+            📝：1.6k 字 | 🕝：7分钟
         </div>
       
-        <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-072303.png" alt="image-20190809152302445"></p>
-<center>（摄于2014年5月南京夫子庙秦淮河）</center>
-
-<a id="more"></a>
-
-<h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><p>对象方便的包装了行为和状态，前者曝露给外部世界，后者为前者提供支持</p>
-<h3 id="关于状态的模式"><a href="#关于状态的模式" class="headerlink" title="关于状态的模式"></a>关于状态的模式</h3><ul>
-<li>状态：使用可变的值进行计算<ul>
-<li>把相似的状态放在一起，确保不通的状态彼此分离</li>
-</ul>
-</li>
-<li>访问：限制对状态的访问，从而保持灵活性</li>
-<li>直接访问：直接访问对象的内部状态</li>
-<li>间接访问：通过方法来访问状态，从而提高灵活性</li>
-</ul>
+        <p>最近参加了前TW大佬熊节发起的TDD训练营，其第二章节Args中参考资料有《重构》-第三章，买《重构》已久，一直未细细研读，翻开第三章，正如其读者评论：</p>
 <blockquote>
-<p>默认的访问策略是: 允许在类中直接访问，其它的使用者必须间接访问</p>
-<p>当两项数据彼此够合适，无疑应该使用间接访问，例如更新一个字段的同时去修改另一个字段</p>
+<p>处于金字塔顶端的书不多，而这本书恰恰就是，很幸运我看到了它。</p>
 </blockquote>
-<ul>
-<li><p>通用状态：把状态保存在字段汇总，使得该类的所有对象都拥有这些状态</p>
+<p>曾经一直在思考一个问题，多读书是好事，可苦于现工作压力，家庭陪伴，是否老了会后悔年轻时读书少了，抉择能力差了，甚至会不满于未来的生活状态，而今天，找到了醍醐灌顶的答案，尤其是读了《重构》-第三章。作为一名coder,重构是绕不开的经典，甚至是圣经也不为过。</p>
+<p>为什么要费这么多口舌来引入《重构》，究其原因，感叹作者/译者的良苦用心，读重构，尤其是第三章，必字字珠玑，每每读完一个 bad taste, 并看到这么多的方式去 fix 时，你会感觉无比的舒畅。爽！</p>
+<p>以下内容不必从头到位看完，只需要按图索骥，找到你自己的 bad taste, 然后 fix !</p>
+<h3 id="《重构》第三节-代码的坏味道"><a href="#《重构》第三节-代码的坏味道" class="headerlink" title="《重构》第三节 代码的坏味道"></a>《重构》第三节 代码的坏味道</h3><p>我们往往很容易解释:”如何删除一个实例变量，如何产生一个继承体系”，<strong>但是，什么时候去做这些事情</strong>，就没有那么顺理成章，用作者的经验来看，没有任何量度规矩比得上一个见识广博者的直觉，作者只会指出，这里有一个可以用重构解决的问题</p>
+<p>第三节共阐述了 22 个 bad taste ,针对其有多种重构方案，且一一道来：</p>
+<h4 id="1-Duplicated-Code"><a href="#1-Duplicated-Code" class="headerlink" title="1 Duplicated Code"></a>1 Duplicated Code</h4><ul>
+<li><p>最单纯的 Duplicate Code 就是：同一个类的两个函数含有相同的表达式</p>
 </li>
-<li><p>可变状态：如果各个实例拥有不通的状态，那么将这些状态放入一个map，并将map保存在实例变量中</p>
-<ul>
-<li>如果遇到一个字段的状态决定了同一个对象中是否需要其它字段，这种情况下就应当使用可变状态</li>
-</ul>
-</li>
-<li><p>外生状态：某些特殊用途的状态放入一个map,并由状态的使用者负责保存</p>
-</li>
-<li><p>变量：提供了访问状态的命名空间</p>
-<ul>
-<li><p>局部变量: 只能在当前的作用域</p>
-<ul>
-<li><p>收集器：用来收集稍后需要的信息，经常作为返回值传出，如果需要返回，命名为result</p>
-</li>
-<li><p>计数：专门用于记录某些其它对象的个数</p>
-</li>
-<li><p>解释：如果有一个复杂的表达式，可把其一部分结果赋值给一个局部变量</p>
-<ul>
-<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> Rectangle(top,left,height,width)</span><br></pre></td></tr></table></figure>
+<li><p>另一种常见的情况：两个互为兄弟的子类内含有相同的表达式</p>
 </li>
 </ul>
-</li>
-<li><p>复用：表达式中的值会不断变化，而又多次需要使用同一个值</p>
+<p><strong>我们按照TDD的思想，一步步分解，增加需求</strong></p>
+<p><strong>需求1</strong>：同一个类中的两个函数含有相同的表达式，解决办法:</p>
 <ul>
-<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Clock each: getClocks())&#123;</span><br><span class="line">	 each.setTime(CurrentTimeMills())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<li>Extract Method(110)</li>
+<li>Before </li>
 </ul>
-</li>
-<li><p>元素：</p>
-</li>
-</ul>
-</li>
-<li><p>字段：对象内的任何地方访问</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printOwing</span><span class="params">(<span class="keyword">double</span> amount)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    printBanner();</span><br><span class="line">   </span><br><span class="line">    <span class="comment">//print details</span></span><br><span class="line">    System.out.println(<span class="string">"name:"</span> + name);</span><br><span class="line">    System.out.println(<span class="string">"amount:"</span> + amount);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <ul>
-<li>选择把字段声明为final,以此告诉阅读者，构造函数执行完之后，就不能再改变这个字段的值</li>
+<li>After</li>
 </ul>
-</li>
-<li><p>静态变量：该类的所有对象度可以访问</p>
-</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>容纳多个值的变量，例如集合，应该是复数形式</p>
-</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printOwing</span><span class="params">(<span class="keyword">double</span> amount)</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">     printBanner();</span><br><span class="line">    </span><br><span class="line">     <span class="comment">//print details</span></span><br><span class="line">     printDetails(amount);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printDetails</span><span class="params">(<span class="keyword">double</span> amount)</span> </span>&#123;</span><br><span class="line">     System.out.println(<span class="string">"name:"</span> + name);</span><br><span class="line">     System.out.println(<span class="string">"amount:"</span> + amount);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>动机：长度不是问题，关键在于函数本身和函数本体之间的语义距离，如果可以强化代码的清晰度，就算函数名称比提炼出来的代码还长又何妨？</strong></p>
+<hr>
+<p>需求2**：互为兄弟的子类，含有相同的表达式，解决办法：</p>
 <ul>
-<li>参数：参数在一个方法被调用指出描述当时的状态</li>
-<li>传入一个参数，用于收集来自多个方法 的复杂结果</li>
-<li>参数对象：把常用的长参数列表打包成一个对象</li>
-<li>常量：不变的状态应该保存为常量</li>
-<li>按角色命名：根据变量在计算中扮演的角色为他们命名</li>
-<li>声明时的类型：为变量声明一个尽可能通用的类型</li>
-<li>初始化：尽可能以声明性的方式对变量进行初始化</li>
-<li>及早初始化：在创建实例的同时初始化字段</li>
-<li>延迟初始化：如果字段的求值动作开销高昂，可以考虑在第一次使用之前才初始化</li>
+<li>Extract Method(110)</li>
+<li>Pull Up Method(322)</li>
+<li>before</li>
 </ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(String doSomething)</span> </span>&#123;</span><br><span class="line">         System.out.println(doSomething);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnotherthing</span><span class="params">(String doAnotherthing)</span> </span>&#123;</span><br><span class="line">         System.out.println(doAnotherthing);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li>after</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">		<span class="comment">// doing Extract Method(110)</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(String doSomething)</span> </span>&#123;</span><br><span class="line">            printDoing(doSomething);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnotherthing</span><span class="params">(String doAnotherthing)</span> </span>&#123;</span><br><span class="line">            printDoing(doAnotherthing);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printDoing</span><span class="params">(String doSomething)</span> </span>&#123;</span><br><span class="line">        System.out.println(doSomething);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">//doing  Pull Up Method(322)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">printDoing</span><span class="params">(String something)</span> </span>&#123;</span><br><span class="line">            System.out.println(something);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(String doSomething)</span> </span>&#123;</span><br><span class="line">            printDoing(doSomething);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnotherthing</span><span class="params">(String doAnotherthing)</span> </span>&#123;</span><br><span class="line">            printDoing(doAnotherthing);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>动机：重复自身只会成为错误的滋生地，此外别无价值，只要系统内出现城府，就会面临修改其中一个，而未能修改另一个的风险</strong></p>
+<hr>
+<p>需求3**：两子类,代码类似，但是并不完全相同</p>
+<ul>
+<li>Form Template Method(345)</li>
+<li>before</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TAX_RATE = <span class="number">5</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResidentialSite</span> <span class="keyword">extends</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getBillableAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">double</span> base = unites * rate;</span><br><span class="line">         <span class="keyword">double</span> tax = base * Site.TAX_RATE;</span><br><span class="line">         <span class="keyword">return</span> base + tax;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifelineSite</span> <span class="keyword">extends</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getBillableAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">double</span> base = unites * rate * <span class="number">0.5</span>;</span><br><span class="line">         <span class="keyword">double</span> tax = base * Site.TAX_RATE * <span class="number">0.5</span>;</span><br><span class="line">         <span class="keyword">return</span> base + tax;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>After </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TAX_RATE = <span class="number">5</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">double</span> <span class="title">getBillableAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getBaseAmount() + getTaxAmount();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">getTaxAmount</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">getBaseAmount</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResidentialSite</span> <span class="keyword">extends</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTaxAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unites * rate;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getBaseAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> base * Site.TAX_RATE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifelineSite</span> <span class="keyword">extends</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTaxAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unites * rate * <span class="number">0.5</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getBaseAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> base * Site.TAX_RATE * <span class="number">0.5</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    ResidentialSite residentialSite = <span class="keyword">new</span> ResidentialSite();</span><br><span class="line">    residentialSite.getBillableAmount();</span><br><span class="line">    </span><br><span class="line">    LifelineSite lifelineSite = <span class="keyword">new</span> LifelineSite();</span><br><span class="line">    lifelineSite.getBillableAmount();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>动机：继承是避免重复行为的强大工具，2个函数以相同的顺序执行大致的操作，则我们可以将操作顺序移植至超类</strong></p>
+<hr>
+<p>需求4** :如果有些函数以不通的算法做相同的事情，可以选择其中比较清晰的一种</p>
+<ul>
+<li><p>Substitute Algorithm(139)</p>
+</li>
+<li><p>Before </p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; names = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">   <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">       <span class="keyword">if</span> (<span class="string">"Don"</span>.equals(name)) <span class="keyword">return</span> <span class="string">"Don"</span>;</span><br><span class="line">       <span class="keyword">if</span> (<span class="string">"John"</span>.equals(name)) <span class="keyword">return</span> <span class="string">"John"</span>;</span><br><span class="line">       <span class="keyword">if</span> (<span class="string">"Kent"</span>.equals(name)) <span class="keyword">return</span> <span class="string">"Kent"</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> <span class="string">""</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>After </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; nameContains = Arrays.asList(<span class="keyword">new</span> String[]&#123;<span class="string">"Don"</span>, <span class="string">"John"</span>, <span class="string">"Kent"</span>&#125;);</span><br><span class="line">  <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">      <span class="keyword">if</span> (nameContains.contains(name)) <span class="keyword">return</span> name;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>动机:如果解决方法有好几种，那么我们就应该选择清晰的方式取代复杂方式</strong></p>
+<hr>
+<h4 id="2-Long-Method"><a href="#2-Long-Method" class="headerlink" title="2 Long Method"></a>2 Long Method</h4><ul>
+<li>90%的场合里，要把函数变小，只需要使用 Extract Method(110)，找到函数中适合集中在一起的部分，将他们提炼出来形成一个新的函数</li>
+</ul>
+<p><strong>需求1</strong>：如果尝试使用Extract Method，最终许多参数和临时变量当作参数，传递给新的函数，这样可读性不高，这时，可以运用Replace Temp with Query(120) 来消除这些临时元素</p>
+<ul>
+<li><p>Replace Temp with Query(120)</p>
+</li>
+<li><p>Before </p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> basePrice = quantity * itemPrice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (basePrice &gt; <span class="number">1000</span>) <span class="keyword">return</span> basePrice * <span class="number">0.95</span>;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">return</span> basePrice * <span class="number">0.98</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>After </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (getBasePrice() &gt; <span class="number">1000</span>) <span class="keyword">return</span> getBasePrice() * <span class="number">0.95</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">return</span> getBasePrice() * <span class="number">0.98</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">getBasePrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> quantity * itemPrice;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>动机:临时变量的问题在于，它们是暂时的，且只能在所属函数中使用，如果替换为一个查询，可以在类的所有方法中使用。</p>
+<hr>
+<p><strong>需求2</strong>：参数过长，如何更加简洁？</p>
+<ul>
+<li>Introduce Parameter Object(295)</li>
+<li>before</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">amountInvoicedIn(Date start, Date end);</span><br><span class="line">  amountReceivedIn(Date start, Date end);</span><br><span class="line">  amountOverdueIn(Date start, Date end);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>After </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">amountInvoicedIn(DateRange);</span><br><span class="line">  amountReceivedIn(DateRange);</span><br><span class="line">  amountOverdueIn(DateRange);</span><br></pre></td></tr></table></figure>
+
+<p>动机:有时会看到一组参数总是在一起被传递，这些参数就是所谓的 Data Clumps，我们可以使用一个对象进行包装，哪怕单纯的只是为了组织在一起，也是值得的。</p>
+<hr>
+<ul>
+<li>Preserve Whole Object（288）</li>
+<li>before</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> low = daysTempRange().getLow();</span><br><span class="line">   <span class="keyword">int</span> high = daysTempRange().getHigh();</span><br><span class="line">   </span><br><span class="line">   withinPlan = plan.withinRange(low, high);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>after </li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">withinPlan = plan.withinRange(daysTempRange());</span><br></pre></td></tr></table></figure>
+
+<p>动机：万一将来被调用的函数需要新的数据项，就必须要查找并修改对此函数的所有调用</p>
+<hr>
+<p><strong>需求3:</strong>需求2后，依然有太多的临时变量和参数</p>
+<ul>
+<li>祭出杀手锏: Replace Method with Method Object（135）</li>
+<li>before</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -304,7 +354,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实现模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">重构</a>
         		</li>
       		
 		</ul>
@@ -360,7 +410,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://github.com/GavinChowUp/gavin.github.io/2019/08/09/【实现模式】状态/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://github.com/GavinChowUp/gavin.github.io/2019/08/14/【重构】重构-代码的坏味道/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -374,18 +424,9 @@
   
 <nav id="article-nav">
   
-    <a href="/gavin.github.io/2019/08/11/【Java基础】反射&动态代理/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          【Java基础】反射&amp;动态代理
-        
-      </div>
-    </a>
   
-  
-    <a href="/gavin.github.io/2019/08/09/【实现模式】类/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【实现模式】类</div>
+    <a href="/gavin.github.io/2019/08/13/【TDD-Practice】/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title"></div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -412,7 +453,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#状态"><span class="toc-number">1.</span> <span class="toc-text">状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于状态的模式"><span class="toc-number">2.</span> <span class="toc-text">关于状态的模式</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#《重构》第三节-代码的坏味道"><span class="toc-number">1.</span> <span class="toc-text">《重构》第三节 代码的坏味道</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Duplicated-Code"><span class="toc-number">1.1.</span> <span class="toc-text">1 Duplicated Code</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Long-Method"><span class="toc-number">1.2.</span> <span class="toc-text">2 Long Method</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
