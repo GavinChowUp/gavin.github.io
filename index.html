@@ -87,7 +87,7 @@
 		</nav>
 
 		<nav class="nav-total">
-				文章 10    字数 <span class="post-count">6.3k</span>
+				文章 33    字数 <span class="post-count">17.7k</span>
 		</nav>
 	
 	</header>		
@@ -156,20 +156,20 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-【重构】重构-代码的坏味道" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【docker】Idea部署镜像至docker：docker-compose方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/08/14/【重构】重构-代码的坏味道/">【重构】重构-代码的坏味道</a>
+      <a class="article-title" href="/gavin.github.io/2019/10/22/【docker】Idea部署镜像至docker：docker-compose方式/">【docker】Idea部署镜像至docker：docker-compose方式</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/08/14/【重构】重构-代码的坏味道/" class="archive-article-date">
-  	<time datetime="2019-08-14T06:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-14</time>
+        <a href="/gavin.github.io/2019/10/22/【docker】Idea部署镜像至docker：docker-compose方式/" class="archive-article-date">
+  	<time datetime="2019-10-21T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-22</time>
 </a>
         
       </header>
@@ -180,143 +180,54 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/08/14/【重构】重构-代码的坏味道/">【重构】重构-代码的坏味道</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/10/22/【docker】Idea部署镜像至docker：docker-compose方式/">【docker】Idea部署镜像至docker：docker-compose方式</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：1.6k 字 | 🕝：7分钟
+            📝：441 字 | 🕝：1分钟
         </div>
       
-        <p>最近参加了前TW大佬熊节发起的TDD训练营，其第二章节Args中参考资料有《重构》-第三章，买《重构》已久，一直未细细研读，翻开第三章，正如其读者评论：</p>
-<blockquote>
-<p>处于金字塔顶端的书不多，而这本书恰恰就是，很幸运我看到了它。</p>
-</blockquote>
-<p>曾经一直在思考一个问题，多读书是好事，可苦于现工作压力，家庭陪伴，是否老了会后悔年轻时读书少了，抉择能力差了，甚至会不满于未来的生活状态，而今天，找到了醍醐灌顶的答案，尤其是读了《重构》-第三章。作为一名coder,重构是绕不开的经典，甚至是圣经也不为过。</p>
-<p>为什么要费这么多口舌来引入《重构》，究其原因，感叹作者/译者的良苦用心，读重构，尤其是第三章，必字字珠玑，每每读完一个 bad taste, 并看到这么多的方式去 fix 时，你会感觉无比的舒畅。爽！</p>
-<p>以下内容不必从头到位看完，只需要按图索骥，找到你自己的 bad taste, 然后 fix !</p>
-<h3 id="《重构》第三节-代码的坏味道"><a href="#《重构》第三节-代码的坏味道" class="headerlink" title="《重构》第三节 代码的坏味道"></a>《重构》第三节 代码的坏味道</h3><p>我们往往很容易解释:”如何删除一个实例变量，如何产生一个继承体系”，<strong>但是，什么时候去做这些事情</strong>，就没有那么顺理成章，用作者的经验来看，没有任何量度规矩比得上一个见识广博者的直觉，作者只会指出，这里有一个可以用重构解决的问题</p>
-<p>第三节共阐述了 22 个 bad taste ,针对其有多种重构方案，且一一道来：</p>
-<h4 id="1-Duplicated-Code"><a href="#1-Duplicated-Code" class="headerlink" title="1 Duplicated Code"></a>1 Duplicated Code</h4><ul>
-<li><p>最单纯的 Duplicate Code 就是：同一个类的两个函数含有相同的表达式</p>
+        <h2 id="前期插件准备"><a href="#前期插件准备" class="headerlink" title="前期插件准备"></a>前期插件准备</h2><ul>
+<li>Docker 安装</li>
+<li>Docker-compose 安装 (Mac 系统安装 docker 后自带，忽略)</li>
+<li>Idea 及 docker 插件<ul>
+<li>idea 要求 2019.2.3 + （ 2018.2 版本会有docker 插件 bug 踩坑）</li>
+</ul>
 </li>
-<li><p>另一种常见的情况：两个互为兄弟的子类内含有相同的表达式</p>
-</li>
+<li>Maven 3+ </li>
 </ul>
-<p><strong>我们按照TDD的思想，一步步分解，增加需求</strong></p>
-<p><strong>需求1</strong>：同一个类中的两个函数含有相同的表达式，解决办法:</p>
-<ul>
-<li>Extract Method(110)</li>
-<li>Before </li>
+<h3 id="docker-安装"><a href="#docker-安装" class="headerlink" title="docker 安装"></a>docker 安装</h3><p><a href="https://www.runoob.com/docker/centos-docker-install.html" target="_blank" rel="noopener">https://www.runoob.com/docker/centos-docker-install.html</a></p>
+<h3 id="Docker-compose-安装"><a href="#Docker-compose-安装" class="headerlink" title="Docker-compose 安装"></a>Docker-compose 安装</h3><p><a href="https://blog.csdn.net/pushiqiang/article/details/78682323" target="_blank" rel="noopener">https://blog.csdn.net/pushiqiang/article/details/78682323</a></p>
+<p>安装成功如下所示：</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-061942.png" alt="image-20191022141941666"></p>
+<h4 id="Docker-compose-开启2375端口（需root用户，仅测试环境使用，-7环境已开启）"><a href="#Docker-compose-开启2375端口（需root用户，仅测试环境使用，-7环境已开启）" class="headerlink" title="Docker-compose 开启2375端口（需root用户，仅测试环境使用，.7环境已开启）"></a>Docker-compose 开启2375端口（需root用户，仅测试环境使用，.7环境已开启）</h4><p><a href="https://blog.csdn.net/qq_41639347/article/details/89436269" target="_blank" rel="noopener">https://blog.csdn.net/qq_41639347/article/details/89436269</a></p>
+<h3 id="idea-下-docker-插件安装"><a href="#idea-下-docker-插件安装" class="headerlink" title="idea 下 docker 插件安装"></a>idea 下 docker 插件安装</h3><p>安装插件，idea默认会安装</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-112801.png" alt="image-20191022192800871"></p>
+<h4 id="插件设置"><a href="#插件设置" class="headerlink" title="插件设置"></a>插件设置</h4><p><strong>Preferences | Build, Execution, Deployment | docker</strong> 下设置</p>
+<p>具体设置如下：</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-112921.png" alt="image-20191022192921334"></p>
+<p>看到 Connection successful 即为成功</p>
+<h2 id="前期项目配置准备"><a href="#前期项目配置准备" class="headerlink" title="前期项目配置准备"></a>前期项目配置准备</h2><h3 id="修改配置："><a href="#修改配置：" class="headerlink" title="修改配置："></a>修改配置：</h3><ul>
+<li>application-test.yml - &gt; token-url-list 修改，一般修改为实际ip,勿用回环地址</li>
+<li>redis 地址修改，本项目compose 文件中有redis,不使用可注释</li>
+<li>MySQL 地址修改</li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-114218.png" alt="image-20191022194217968"></li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-114229.png" alt="image-20191022194228914"></li>
 </ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printOwing</span><span class="params">(<span class="keyword">double</span> amount)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    printBanner();</span><br><span class="line">   </span><br><span class="line">    <span class="comment">//print details</span></span><br><span class="line">    System.out.println(<span class="string">"name:"</span> + name);</span><br><span class="line">    System.out.println(<span class="string">"amount:"</span> + amount);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>After</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printOwing</span><span class="params">(<span class="keyword">double</span> amount)</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">     printBanner();</span><br><span class="line">    </span><br><span class="line">     <span class="comment">//print details</span></span><br><span class="line">     printDetails(amount);</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printDetails</span><span class="params">(<span class="keyword">double</span> amount)</span> </span>&#123;</span><br><span class="line">     System.out.println(<span class="string">"name:"</span> + name);</span><br><span class="line">     System.out.println(<span class="string">"amount:"</span> + amount);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>动机：长度不是问题，关键在于函数本身和函数本体之间的语义距离，如果可以强化代码的清晰度，就算函数名称比提炼出来的代码还长又何妨？</strong></p>
-<hr>
-<p>需求2**：互为兄弟的子类，含有相同的表达式，解决办法：</p>
-<ul>
-<li>Extract Method(110)</li>
-<li>Pull Up Method(322)</li>
-<li>before</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(String doSomething)</span> </span>&#123;</span><br><span class="line">         System.out.println(doSomething);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span> </span>&#123;</span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnotherthing</span><span class="params">(String doAnotherthing)</span> </span>&#123;</span><br><span class="line">         System.out.println(doAnotherthing);</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<ul>
-<li>after</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">		<span class="comment">// doing Extract Method(110)</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(String doSomething)</span> </span>&#123;</span><br><span class="line">            printDoing(doSomething);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnotherthing</span><span class="params">(String doAnotherthing)</span> </span>&#123;</span><br><span class="line">            printDoing(doAnotherthing);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printDoing</span><span class="params">(String doSomething)</span> </span>&#123;</span><br><span class="line">        System.out.println(doSomething);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"> <span class="comment">//doing  Pull Up Method(322)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">printDoing</span><span class="params">(String something)</span> </span>&#123;</span><br><span class="line">            System.out.println(something);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Boy</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doSomething</span><span class="params">(String doSomething)</span> </span>&#123;</span><br><span class="line">            printDoing(doSomething);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Girl</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doAnotherthing</span><span class="params">(String doAnotherthing)</span> </span>&#123;</span><br><span class="line">            printDoing(doAnotherthing);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>动机：重复自身只会成为错误的滋生地，此外别无价值，只要系统内出现城府，就会面临修改其中一个，而未能修改另一个的风险</strong></p>
-<hr>
-<p>需求3**：两子类,代码类似，但是并不完全相同</p>
-<ul>
-<li>Form Template Method(345)</li>
-<li>before</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">     <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TAX_RATE = <span class="number">5</span>;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResidentialSite</span> <span class="keyword">extends</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getBillableAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">double</span> base = unites * rate;</span><br><span class="line">         <span class="keyword">double</span> tax = base * Site.TAX_RATE;</span><br><span class="line">         <span class="keyword">return</span> base + tax;</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifelineSite</span> <span class="keyword">extends</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getBillableAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">double</span> base = unites * rate * <span class="number">0.5</span>;</span><br><span class="line">         <span class="keyword">double</span> tax = base * Site.TAX_RATE * <span class="number">0.5</span>;</span><br><span class="line">         <span class="keyword">return</span> base + tax;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>After </li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> TAX_RATE = <span class="number">5</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">double</span> <span class="title">getBillableAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getBaseAmount() + getTaxAmount();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">getTaxAmount</span><span class="params">()</span></span>;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">double</span> <span class="title">getBaseAmount</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResidentialSite</span> <span class="keyword">extends</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTaxAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unites * rate;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getBaseAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> base * Site.TAX_RATE;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LifelineSite</span> <span class="keyword">extends</span> <span class="title">Site</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTaxAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> unites * rate * <span class="number">0.5</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getBaseAmount</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> base * Site.TAX_RATE * <span class="number">0.5</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    ResidentialSite residentialSite = <span class="keyword">new</span> ResidentialSite();</span><br><span class="line">    residentialSite.getBillableAmount();</span><br><span class="line">    </span><br><span class="line">    LifelineSite lifelineSite = <span class="keyword">new</span> LifelineSite();</span><br><span class="line">    lifelineSite.getBillableAmount();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>动机：继承是避免重复行为的强大工具，2个函数以相同的顺序执行大致的操作，则我们可以将操作顺序移植至超类</strong></p>
-<hr>
-<p>需求4** :如果有些函数以不通的算法做相同的事情，可以选择其中比较清晰的一种</p>
-<ul>
-<li><p>Substitute Algorithm(139)</p>
-</li>
-<li><p>Before </p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; names = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">   <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">       <span class="keyword">if</span> (<span class="string">"Don"</span>.equals(name)) <span class="keyword">return</span> <span class="string">"Don"</span>;</span><br><span class="line">       <span class="keyword">if</span> (<span class="string">"John"</span>.equals(name)) <span class="keyword">return</span> <span class="string">"John"</span>;</span><br><span class="line">       <span class="keyword">if</span> (<span class="string">"Kent"</span>.equals(name)) <span class="keyword">return</span> <span class="string">"Kent"</span>;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> <span class="string">""</span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>After </li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; nameContains = Arrays.asList(<span class="keyword">new</span> String[]&#123;<span class="string">"Don"</span>, <span class="string">"John"</span>, <span class="string">"Kent"</span>&#125;);</span><br><span class="line">  <span class="keyword">for</span> (String name : names) &#123;</span><br><span class="line">      <span class="keyword">if</span> (nameContains.contains(name)) <span class="keyword">return</span> name;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>动机:如果解决方法有好几种，那么我们就应该选择清晰的方式取代复杂方式</strong></p>
-<hr>
-<h4 id="2-Long-Method"><a href="#2-Long-Method" class="headerlink" title="2 Long Method"></a>2 Long Method</h4><ul>
-<li>90%的场合里，要把函数变小，只需要使用 Extract Method(110)，找到函数中适合集中在一起的部分，将他们提炼出来形成一个新的函数</li>
-</ul>
-<p><strong>需求1</strong>：如果尝试使用Extract Method，最终许多参数和临时变量当作参数，传递给新的函数，这样可读性不高，这时，可以运用Replace Temp with Query(120) 来消除这些临时元素</p>
-<ul>
-<li><p>Replace Temp with Query(120)</p>
-</li>
-<li><p>Before </p>
-</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">double</span> basePrice = quantity * itemPrice;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (basePrice &gt; <span class="number">1000</span>) <span class="keyword">return</span> basePrice * <span class="number">0.95</span>;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">return</span> basePrice * <span class="number">0.98</span>;</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>After </li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (getBasePrice() &gt; <span class="number">1000</span>) <span class="keyword">return</span> getBasePrice() * <span class="number">0.95</span>;</span><br><span class="line">     <span class="keyword">else</span> <span class="keyword">return</span> getBasePrice() * <span class="number">0.98</span>;</span><br><span class="line"> </span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">getBasePrice</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> quantity * itemPrice;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>动机:临时变量的问题在于，它们是暂时的，且只能在所属函数中使用，如果替换为一个查询，可以在类的所有方法中使用。</p>
-<hr>
-<p><strong>需求2</strong>：参数过长，如何更加简洁？</p>
-<ul>
-<li>Introduce Parameter Object(295)</li>
-<li>before</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">amountInvoicedIn(Date start, Date end);</span><br><span class="line">  amountReceivedIn(Date start, Date end);</span><br><span class="line">  amountOverdueIn(Date start, Date end);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>After </li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">amountInvoicedIn(DateRange);</span><br><span class="line">  amountReceivedIn(DateRange);</span><br><span class="line">  amountOverdueIn(DateRange);</span><br></pre></td></tr></table></figure>
-
-<p>动机:有时会看到一组参数总是在一起被传递，这些参数就是所谓的 Data Clumps，我们可以使用一个对象进行包装，哪怕单纯的只是为了组织在一起，也是值得的。</p>
-<hr>
-<ul>
-<li>Preserve Whole Object（288）</li>
-<li>before</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> low = daysTempRange().getLow();</span><br><span class="line">   <span class="keyword">int</span> high = daysTempRange().getHigh();</span><br><span class="line">   </span><br><span class="line">   withinPlan = plan.withinRange(low, high);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>after </li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">withinPlan = plan.withinRange(daysTempRange());</span><br></pre></td></tr></table></figure>
-
-<p>动机：万一将来被调用的函数需要新的数据项，就必须要查找并修改对此函数的所有调用</p>
-<hr>
-<p><strong>需求3:</strong>需求2后，依然有太多的临时变量和参数</p>
-<ul>
-<li>祭出杀手锏: Replace Method with Method Object（135）</li>
-<li>before</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
+<h2 id="使用idea-打镜像至目标docker"><a href="#使用idea-打镜像至目标docker" class="headerlink" title="使用idea 打镜像至目标docker"></a>使用idea 打镜像至目标docker</h2><p>方式：利用docker-compose up 命令，打镜像至docker，若在idea 终端使用该命令，则使用本机docker，若不想查看部署镜像及启动日志，使用 docker-compose up -d</p>
+<p>如下所示，本人docker 环境有3个，双击进入docker-compose.yml</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-115134.png" alt="image-20191022195133798"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113345.png" alt="image-20191022193344265"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113408.png" alt="image-20191022193407597"></p>
+<p>点击上图所示箭头，即可将镜像打到不同的docker环境</p>
+<p><strong>注：docker 镜像一般较大，会存在网络io,建议留1-2天时间部署调试。</strong></p>
+<p>当看到如下内容，说明镜像部署成功,docker-compose会自动拉起容器，并启动</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113637.png" alt="image-20191022193637390"></p>
+<p>也可从docker 插件中查看具体日志：</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113748.png" alt="image-20191022193748492"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113856.png" alt="image-20191022193856232"></p>
+<h3 id><a href="#" class="headerlink" title></a><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-114403.png" alt="image-20191022194402045"></h3><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><strong>以上方式，适用 docker 集成部署（不使用镜像仓库），但不适用频繁部署，网络io很大(500kb上行速度，部署一个模块20min+)，且代码修改后，需要重新部署镜像。</strong></p>
 
       
 
@@ -330,7 +241,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">重构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">docker</a>
         		</li>
       		
 		</ul>
@@ -340,7 +251,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/14/【重构】重构-代码的坏味道/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/10/22/【docker】Idea部署镜像至docker：docker-compose方式/">展开全文 >></a>
         </p>
       
 
@@ -370,7 +281,7 @@
 
 
   
-    <article id="post-【TDD-Practice】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-速记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -378,25 +289,20 @@
         <!--  -->
         <center><p></p></center>
         <div align="center" class="post-count">
-            📝：215 字 | 🕝：1分钟
+            📝：230 字 | 🕝：1分钟
         </div>
       
-        <p>Idea 快捷键</p>
-<h3 id="Mac-与-idea-冲突快捷键"><a href="#Mac-与-idea-冲突快捷键" class="headerlink" title="Mac 与 idea 冲突快捷键"></a>Mac 与 idea 冲突快捷键</h3><ul>
-<li>注释快捷键<code>command + shift + /</code>（系统偏好设置-&gt;应用快捷键(取消)）</li>
-</ul>
-<h3 id="idea-for-Mac-常用快捷键"><a href="#idea-for-Mac-常用快捷键" class="headerlink" title="idea for Mac 常用快捷键"></a>idea for Mac 常用快捷键</h3><h4 id="点击跳转类"><a href="#点击跳转类" class="headerlink" title="点击跳转类"></a>点击跳转类</h4><ul>
-<li><code>Command + B / Command + 鼠标点击</code> 进入光标所在的方法/变量的接口或是定义处</li>
-<li><code>Command + Option + B</code> 跳转到实现处，在某个调用的方法名上使用会跳到具体的实现处，可以跳过接口</li>
-<li><code>F2 / Shift + F2</code> 跳转到下一个/上一个突出错误或警告的位置</li>
-<li><code>F4 / Command + 方向键下</code> 编辑/查看代码源</li>
-<li><code>Control + H</code> 显示当前类的层次结构</li>
-<li><code>Command + Shift + H</code> 显示方法层次结构</li>
-<li><code>Option + 方向键上</code> 连续选中代码块</li>
-<li><code>Option + 方向键下</code> 减少当前选中的代码块</li>
-<li><code>Command + Shift + U</code> 大小写切换</li>
-<li><code>Command + Option + M</code> 将选中的代码提取为方法</li>
-</ul>
+        <p>验证码基本参数可配置</p>
+<p>验证码拦截的接口可配置</p>
+<p>业务逻辑可配置</p>
+<p>需要把逻辑封装到接口中</p>
+<p>然后写这个逻辑的实现</p>
+<p>现在已经把接口的业务逻辑，挪到一个接口的实现中了，如何把这个接口的实现做成可配置的?</p>
+<p>创建一个config 配置类</p>
+<p>提供默认的一个Generater,但是需要注意的是，这个bean 不能有component 注解，然后利用conditionOnMissingBean 这个注解，提供给外部一个可配置的条件。</p>
+<p>原来的代码不满足的情况下，可以使用以上技巧，提供一个增量的修改方式，而不是去直接修改代码</p>
+<p>短信验证码登陆，自定义一个身份认证的逻辑</p>
+<p>作为一个高级开发工作者，一定要分层的去封装可能发生的变化</p>
 
       
 
@@ -409,7 +315,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/13/【TDD-Practice】/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/10/10/速记/">展开全文 >></a>
         </p>
       
 
@@ -439,7 +345,7 @@
 
 
   
-    <article id="post-【高可用架构】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【SpringSecurity】springsecurity 如何自定义登陆页及配置默认登陆页" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
     
@@ -462,7 +368,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/13/【高可用架构】/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/10/09/【SpringSecurity】springsecurity 如何自定义登陆页及配置默认登陆页/">展开全文 >></a>
         </p>
       
 
@@ -492,179 +398,20 @@
 
 
   
-    <article id="post-【高并发架构】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-        <!--  -->
-        <center><p></p></center>
-        <div align="center" class="post-count">
-            📝：0 字 | 🕝：1分钟
-        </div>
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/13/【高并发架构】/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【分布式系统】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-        <!--  -->
-        <center><p></p></center>
-        <div align="center" class="post-count">
-            📝：0 字 | 🕝：1分钟
-        </div>
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/13/【分布式系统】/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【自己动手系列】" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-        <!--  -->
-        <center><p></p></center>
-        <div align="center" class="post-count">
-            📝：0 字 | 🕝：1分钟
-        </div>
-      
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/13/【自己动手系列】/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【Java基础】反射&amp;动态代理" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【SpringSecurity】关于TokenStore及Token有效期" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/08/11/【Java基础】反射&动态代理/">【Java基础】反射&amp;动态代理</a>
+      <a class="article-title" href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/">【SpringSecurity】关于TokenStore及Token有效期</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/08/11/【Java基础】反射&动态代理/" class="archive-article-date">
-  	<time datetime="2019-08-11T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-11</time>
+        <a href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/" class="archive-article-date">
+  	<time datetime="2019-10-09T01:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
 </a>
         
       </header>
@@ -675,19 +422,46 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/08/11/【Java基础】反射&动态代理/">【Java基础】反射&amp;动态代理</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/">【SpringSecurity】关于TokenStore及Token有效期</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：2.2k 字 | 🕝：8分钟
+            📝：712 字 | 🕝：2分钟
         </div>
       
-        <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-12-060830.png" alt="image-20190812140829476"></p>
-<center>（摄于2018年10月西安唐延路）</center>
-        
-          <a class="article-more-a" href="/gavin.github.io/2019/08/11/【Java基础】反射&动态代理/#more">more >></a>
-        
+        <h2 id="抛出问题"><a href="#抛出问题" class="headerlink" title="抛出问题"></a>抛出问题</h2><p>今天和业务同事沟通需求，原token 存储在redis中，重复登陆会返回相同的token，认为机制有点问题，故要求，登陆时返回不同的token，并且不要存在redis中。</p>
+<p>当时我的理解是，token 是有有效期的，存在于tokenStore 中，那么在每次访问接口的时候，都会有机制去校验这个token的时效性(从tokenStore中取)，我如果把redis 中的token 删除以后，重新登陆后，会不会重新获取一个token呢？如果不设置自定义的tokenStore，那么这个token 将会存在哪里？</p>
+<p>带着这个疑问，我将redis 的tokenStore 注释以后，我想，这下应该能揪出token 的小尾巴了吧。</p>
+<hr>
+<h2 id="TokenStore"><a href="#TokenStore" class="headerlink" title="TokenStore"></a>TokenStore</h2><h3 id="RedisTokenStore"><a href="#RedisTokenStore" class="headerlink" title="RedisTokenStore"></a>RedisTokenStore</h3><p>首先登陆，返回一个accessToken</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"access_token"</span>:<span class="string">"7e66a79e-35bc-46e3-98c7-8e616939fd0d"</span>,<span class="attr">"token_type"</span>:<span class="string">"bearer"</span>,<span class="attr">"refresh_token"</span>:<span class="string">"dfea4af7-d861-4d66-8c10-be7f4ab1655b"</span>,<span class="attr">"expires_in"</span>:<span class="number">43042</span>,<span class="attr">"scope"</span>:<span class="string">"server"</span>,<span class="attr">"license"</span>:<span class="string">"made by walrus"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在redis中 删除token，此时重新登陆，会颁发一个新的token</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"access_token"</span>:<span class="string">"63836269-70f6-4d8c-8b96-3d3203a1c3b3"</span>,<span class="attr">"token_type"</span>:<span class="string">"bearer"</span>,<span class="attr">"refresh_token"</span>:<span class="string">"e5a0f674-6985-4700-b9b9-35083be4634a"</span>,<span class="attr">"expires_in"</span>:<span class="number">43199</span>,<span class="attr">"scope"</span>:<span class="string">"server"</span>,<span class="attr">"license"</span>:<span class="string">"made by walrus"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从时间上就可以看出token 的有效期变长了。</p>
+<p>如果我们不删除这个token,重新登陆，我们来看看这个token 是什么样的？</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"access_token"</span>:<span class="string">"63836269-70f6-4d8c-8b96-3d3203a1c3b3"</span>,<span class="attr">"token_type"</span>:<span class="string">"bearer"</span>,<span class="attr">"refresh_token"</span>:<span class="string">"e5a0f674-6985-4700-b9b9-35083be4634a"</span>,<span class="attr">"expires_in"</span>:<span class="number">43098</span>,<span class="attr">"scope"</span>:<span class="string">"server"</span>,<span class="attr">"license"</span>:<span class="string">"made by walrus"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，我们重新登陆后，token有效期变短了，说明返回的还是原来的token，说明，在登陆的时候，会先看看tokenStore中是否有数据，如果有的话，会直接返回原来的数据，我们跟跟源码看看</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-29-104932.png" alt="image-20190929184932555"></p>
+<p>可以看到，在创建token 的时候，会在tokenStore中先查一下，是否存在这个token，有的话，就把存在的token给又重新颁发了。</p>
+<p><strong>结论：只要tokenStore有，那个这个token就一直会颁发，直到过期</strong></p>
+<h3 id="默认的TokenStore是什么呢？"><a href="#默认的TokenStore是什么呢？" class="headerlink" title="默认的TokenStore是什么呢？"></a>默认的TokenStore是什么呢？</h3><p>我们在配置中，注释tokenStore</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-29-105432.png" alt="image-20190929185432230"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-29-105721.png" alt="image-20190929185720831"></p>
+<p>可以看到，默认的TokenStore 是 InMemoryTokenStore。</p>
+<hr>
+<h2 id="如何满足小伙伴的需求呢？"><a href="#如何满足小伙伴的需求呢？" class="headerlink" title="如何满足小伙伴的需求呢？"></a>如何满足小伙伴的需求呢？</h2><p>前端统一传UserName,Password</p>
+<h3 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h3><p>先登录，然后通过登陆后获取的refresh_token 重新获取一个新的token。</p>
+<h3 id="方案2"><a href="#方案2" class="headerlink" title="方案2"></a>方案2</h3><p>先登陆，登陆后，从tokenStore中删除该token,然后重新登陆，再获取一个新的token。</p>
+<p>个人倾向于方案1，毕竟，更能说的过去，要是2次登陆，逻辑变扭。</p>
+<h3 id="方案3"><a href="#方案3" class="headerlink" title="方案3"></a>方案3</h3><p>重写一个tokenStore，将getAccessToken返回的数据置为空，目前测试，暂没有影响到业务</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-29-112139.png" alt="image-20190929192139064"></p>
+<p>其实 refresh_token 还要比 正常的登陆要多走一步，这一步是设置了其refresh_token 的default scopes</p>
+<h2 id="Token的默认时间"><a href="#Token的默认时间" class="headerlink" title="Token的默认时间"></a>Token的默认时间</h2><p>token 的默认时间可以在数据库中设置，根据不同的clientId,现设置均为null,使用SpringSecurity 默认token 时间，为12小时，refresh_token 的默认时间为30天</p>
+
       
 
       
@@ -700,7 +474,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Java基础</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">SpringSecurity</a>
         		</li>
       		
 		</ul>
@@ -710,7 +484,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/11/【Java基础】反射&动态代理/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/">展开全文 >></a>
         </p>
       
 
@@ -740,20 +514,20 @@
 
 
   
-    <article id="post-【实现模式】状态" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【SpringCloud】Restful 常用的拦截机制及使用场景" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/08/09/【实现模式】状态/">【实现模式】状态</a>
+      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">【SpringCloud】Restful 常用的拦截机制及使用场景</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/08/09/【实现模式】状态/" class="archive-article-date">
-  	<time datetime="2019-08-09T06:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
+        <a href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/" class="archive-article-date">
+  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
 </a>
         
       </header>
@@ -764,19 +538,37 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/08/09/【实现模式】状态/">【实现模式】状态</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">【SpringCloud】Restful 常用的拦截机制及使用场景</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：775 字 | 🕝：2分钟
+            📝：266 字 | 🕝：1分钟
         </div>
       
-        <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-072303.png" alt="image-20190809152302445"></p>
-<center>（摄于2014年5月南京夫子庙秦淮河）</center>
-        
-          <a class="article-more-a" href="/gavin.github.io/2019/08/09/【实现模式】状态/#more">more >></a>
-        
+        <h2 id="RestFul-的拦截机制"><a href="#RestFul-的拦截机制" class="headerlink" title="RestFul 的拦截机制"></a>RestFul 的拦截机制</h2><p>需求：实现接口请求耗时</p>
+<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-01-144328.png" alt="image-20191001224327588"></p>
+<p>如果加了Component 注解，则对所有的请求路径满足，如果不加，需要注册Bean 然后进行设置</p>
+<p><strong>注意：filter只能拿到http 的请求和响应，但是这个filter 是不知道 具体哪个 控制器，哪个方法去处理这个请求;</strong></p>
+<p><strong>如果我们需要这些信息的话，那么就需要拦截器去处理了</strong></p>
+<h3 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-005837.png" alt="image-20191002085836527"></p>
+<p>拦截器与filter 不同之处在于，拦截器还需要进行设置，才能起效。</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-005916.png" alt="image-20191002085915905"></p>
+<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-021315.png" alt="image-20191002101315087"></p>
+<h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-014538.png" alt="image-20191002094538200" style="zoom:50%;">
+
+<p>其启动顺序如上图所示，最先进入 filter，然后是interceptor，然后是 aspect</p>
+<p>其日志如下：</p>
+<img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-021426.png" alt="image-20191002101426277" style="zoom:50%;">
+
+
+
+<h3 id="filter，intercepter-aop-的具体区别是什么呢？"><a href="#filter，intercepter-aop-的具体区别是什么呢？" class="headerlink" title="filter，intercepter,aop 的具体区别是什么呢？"></a>filter，intercepter,aop 的具体区别是什么呢？</h3><ul>
+<li>filter ，只能拿到request，response的原始的http请求，但是不知道具体是哪个类执行，哪个方法执行</li>
+<li>Intercepter ，相比于filter 可以拿到上述哪个类执行，哪个方法执行</li>
+<li>aop，可以拿到执行结果，更多的是面向切面的编程思想</li>
+</ul>
+
       
 
       
@@ -789,7 +581,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实现模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
         		</li>
       		
 		</ul>
@@ -799,7 +591,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/09/【实现模式】状态/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">展开全文 >></a>
         </p>
       
 
@@ -829,20 +621,20 @@
 
 
   
-    <article id="post-【实现模式】类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【SpringCloud】Springboot中的事件发布及事务控制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/08/09/【实现模式】类/">【实现模式】类</a>
+      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot中的事件发布及事务控制/">【SpringCloud】Springboot 中的事件发布及事务控制</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/08/09/【实现模式】类/" class="archive-article-date">
-  	<time datetime="2019-08-09T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
+        <a href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot中的事件发布及事务控制/" class="archive-article-date">
+  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
 </a>
         
       </header>
@@ -853,19 +645,76 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/08/09/【实现模式】类/">【实现模式】类</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot中的事件发布及事务控制/">【SpringCloud】Springboot 中的事件发布及事务控制</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：882 字 | 🕝：3分钟
+            📝：397 字 | 🕝：1分钟
         </div>
       
-        <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-031148.png" alt="image-20190809111148417"></p>
-<center>（摄于2018年11月西安）</center>
-        
-          <a class="article-more-a" href="/gavin.github.io/2019/08/09/【实现模式】类/#more">more >></a>
-        
+        <h2 id="事件发布"><a href="#事件发布" class="headerlink" title="事件发布"></a>事件发布</h2><h3 id="事件发布的优点及使用场景"><a href="#事件发布的优点及使用场景" class="headerlink" title="事件发布的优点及使用场景"></a>事件发布的优点及使用场景</h3><ul>
+<li>优点<ul>
+<li>业务解耦，在不影响原来业务逻辑的情况下，加入其它业务</li>
+</ul>
+</li>
+<li>场景<ul>
+<li>app上线后已实现用户注册功能，现需要在用户注册成功后给用户发送短信提示等</li>
+</ul>
+</li>
+</ul>
+<h3 id="如何进行事件发布"><a href="#如何进行事件发布" class="headerlink" title="如何进行事件发布"></a>如何进行事件发布</h3><ul>
+<li><p>创建消息对象，一般为业务对象</p>
+<ul>
+<li><p>Student</p>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Builder</span>(toBuilder = <span class="keyword">true</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> String id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>创建事件event</p>
+<ul>
+<li><p>StudentEvent,该事件用于携带消息对象，进行传播</p>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentEvent</span> <span class="keyword">extends</span> <span class="title">ApplicationEvent</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StudentEvent</span><span class="params">(Student source)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(source);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>创建监听Lisitener</p>
+<ul>
+<li><p>StudentListener,用于监听StudentEvent，这里进行后续的逻辑处理</p>
+</li>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentListener</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Async</span></span><br><span class="line">    <span class="meta">@Order</span></span><br><span class="line">    <span class="meta">@EventListener</span>(StudentEvent.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveSysLog</span><span class="params">(StudentEvent event)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        Student student = (Student) event.getSource();</span><br><span class="line">        System.out.println(<span class="string">"监听到事件啦，现在开始进行异步处理"</span> + student);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>在原有业务处，发布事件，进行处理，一行代码，搞定异步逻辑。</p>
+<ul>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span>(<span class="string">"student"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentController</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    StudentService service;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@GetMapping</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">saveStudent</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">        Student gavin = Student.builder().id(<span class="string">"1"</span>).name(<span class="string">"gavin"</span>).build();</span><br><span class="line">        </span><br><span class="line">        service.saveStudent(gavin);</span><br><span class="line">        </span><br><span class="line">        SpringContextHolder.publishEvent(<span class="keyword">new</span> StudentEvent(gavin));</span><br><span class="line">        </span><br><span class="line">        System.out.println(gavin);</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="事件发布的事务控制"><a href="#事件发布的事务控制" class="headerlink" title="事件发布的事务控制"></a>事件发布的事务控制</h3><p>在项目中，往往需要执行数据库操作后，发送消息或事件来异步调用其他组件执行相应的操作，例如：</p>
+<p>用户注册后发送激活码；<br>配置修改后发送更新事件等。<br>但是，数据库的操作如果还未完成，此时异步调用的方法查询数据库发现没有数据，这就会出现问题。@TransactionalEventListener注解搞定</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-03-113200.png" alt="image-20191003193159147"></p>
+
       
 
       
@@ -878,7 +727,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实现模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
         		</li>
       		
 		</ul>
@@ -888,7 +737,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/09/【实现模式】类/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot中的事件发布及事务控制/">展开全文 >></a>
         </p>
       
 
@@ -918,20 +767,20 @@
 
 
   
-    <article id="post-【实现模式】价值观&amp;原则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【SpringSecurity】Oauth2协议简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/08/09/【实现模式】价值观&原则/">【实现模式】价值观&amp;原则</a>
+      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">【SpringSecurity】Oauth协议简介</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/08/09/【实现模式】价值观&原则/" class="archive-article-date">
-  	<time datetime="2019-08-09T01:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-09</time>
+        <a href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/" class="archive-article-date">
+  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
 </a>
         
       </header>
@@ -942,20 +791,22 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/08/09/【实现模式】价值观&原则/">【实现模式】价值观&amp;原则</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">【SpringSecurity】Oauth协议简介</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：641 字 | 🕝：2分钟
+            📝：32 字 | 🕝：1分钟
         </div>
       
-        <img width="850" height="500" src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-08-09-012343.png">
+        <h2 id="Oauth协议简介"><a href="#Oauth协议简介" class="headerlink" title="Oauth协议简介"></a>Oauth协议简介</h2><ul>
+<li>Oauth协议要解决的问题</li>
+<li>Oauth协议中的各种角色</li>
+<li>Oauth协议中的运行流程</li>
+</ul>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-16-022600.png" alt="image-20191016102600293"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-16-022616.png" alt="image-20191016102615280"></p>
 
-<center>（摄于2019年7月济南出差途中）</center>
-        
-          <a class="article-more-a" href="/gavin.github.io/2019/08/09/【实现模式】价值观&原则/#more">more >></a>
-        
       
 
       
@@ -968,7 +819,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实现模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">SpringSecurity</a>
         		</li>
       		
 		</ul>
@@ -978,7 +829,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/08/09/【实现模式】价值观&原则/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">展开全文 >></a>
         </p>
       
 
@@ -1008,6 +859,395 @@
 
 
   
+    <article id="post-【SpringCloud】Springboot 默认的异常处理机制及自定义异常处理机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        <!-- 
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot 默认的异常处理机制及自定义异常处理机制/">【SpringCloud】Springboot 默认的异常处理机制及自定义异常处理机制</a>
+    </h1>
+  
+ -->
+        
+        <a href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot 默认的异常处理机制及自定义异常处理机制/" class="archive-article-date">
+  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
+</a>
+        
+      </header>
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+        <!--  -->
+        <center><p>
+  
+    <h1 itemprop="name">
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot 默认的异常处理机制及自定义异常处理机制/">【SpringCloud】Springboot 默认的异常处理机制及自定义异常处理机制</a>
+    </h1>
+  
+</p></center>
+        <div align="center" class="post-count">
+            📝：354 字 | 🕝：1分钟
+        </div>
+      
+        <h2 id="Springboot-默认异常处理机制"><a href="#Springboot-默认异常处理机制" class="headerlink" title="Springboot 默认异常处理机制"></a>Springboot 默认异常处理机制</h2><h3 id="网页端"><a href="#网页端" class="headerlink" title="网页端"></a>网页端</h3><p>当我们网页端访问时，返回的数据如下：是一个html</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span><span class="tag">&lt;<span class="name">body</span>&gt;</span><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Whitelabel Error Page<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>This application has no explicit mapping for /error, so you are seeing this as a fallback.<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'created'</span>&gt;</span>Mon Sep 30 16:37:59 CST 2019<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span>There was an unexpected error (type=Not Found, status=404).<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">div</span>&gt;</span>No message available<span class="tag">&lt;/<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">body</span>&gt;</span><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="App端"><a href="#App端" class="headerlink" title="App端"></a>App端</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="string">"2019-09-30T08:44:14.418+0000"</span>,</span><br><span class="line">    <span class="attr">"status"</span>: <span class="number">404</span>,</span><br><span class="line">    <span class="attr">"error"</span>: <span class="string">"Not Found"</span>,</span><br><span class="line">    <span class="attr">"message"</span>: <span class="string">"No message available"</span>,</span><br><span class="line">    <span class="attr">"path"</span>: <span class="string">"/xxx"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>访问的是同样的网站，但是是不同的结果，这是为什么呢？</p>
+<p>查看请求头</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-30-085359.png" alt="image-20190930165359406"></p>
+<p>查看源码</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-30-084529.png" alt="image-20190930164528683"></p>
+<p>produces= “text/html” 指出返回的具体数据是什么？</p>
+<p>查看源码</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-30-090326.png" alt="image-20190930170326537"></p>
+<p>即可以是对返回数据的定义，也可以是对请求头的校验，这样子，就可以路由不同的controller啦。</p>
+<h2 id="自定义异常处理机制"><a href="#自定义异常处理机制" class="headerlink" title="自定义异常处理机制"></a>自定义异常处理机制</h2><h3 id="网页端-1"><a href="#网页端-1" class="headerlink" title="网页端"></a>网页端</h3><p>在resources下新建：resources:error ，然后创建404.html 如下：<img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-30-085030.png" alt="image-20190930165029910"></p>
+<p>点击后，网页展示如下：自定义成功</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-30-085053.png" alt="image-20190930165053523"></p>
+<p>该404页面为腾讯404 公益页面</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">title</span>&gt;</span>404<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> 			  <span class="attr">src</span>=<span class="string">"//qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="App端-1"><a href="#App端-1" class="headerlink" title="App端"></a>App端</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-30-091746.png" alt="image-20190930171746052"></p>
+<p>通过该异常处理方式，进行处理</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot 默认的异常处理机制及自定义异常处理机制/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【SpringSecurity】关于SpringSecurity的认证服务器和资源服务器" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        <!-- 
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringSecurity】关于SpringSecurity的认证服务器和资源服务器/">【SpringSecurity】关于SpringSecurity的认证服务器和资源服务器</a>
+    </h1>
+  
+ -->
+        
+        <a href="/gavin.github.io/2019/09/28/【SpringSecurity】关于SpringSecurity的认证服务器和资源服务器/" class="archive-article-date">
+  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
+</a>
+        
+      </header>
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+        <!--  -->
+        <center><p>
+  
+    <h1 itemprop="name">
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringSecurity】关于SpringSecurity的认证服务器和资源服务器/">【SpringSecurity】关于SpringSecurity的认证服务器和资源服务器</a>
+    </h1>
+  
+</p></center>
+        <div align="center" class="post-count">
+            📝：10 字 | 🕝：1分钟
+        </div>
+      
+        <h2 id="资源服务器"><a href="#资源服务器" class="headerlink" title="资源服务器"></a>资源服务器</h2><h2 id="认证服务器"><a href="#认证服务器" class="headerlink" title="认证服务器"></a>认证服务器</h2>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">SpringSecurity</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringSecurity】关于SpringSecurity的认证服务器和资源服务器/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【netty源码笔记】NioEventLoop" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        <!-- 
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/gavin.github.io/2019/09/12/【netty源码笔记】NioEventLoop/">【netty源码笔记】(三)NioEventLoop 探究</a>
+    </h1>
+  
+ -->
+        
+        <a href="/gavin.github.io/2019/09/12/【netty源码笔记】NioEventLoop/" class="archive-article-date">
+  	<time datetime="2019-09-12T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-12</time>
+</a>
+        
+      </header>
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+        <!--  -->
+        <center><p>
+  
+    <h1 itemprop="name">
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/12/【netty源码笔记】NioEventLoop/">【netty源码笔记】(三)NioEventLoop 探究</a>
+    </h1>
+  
+</p></center>
+        <div align="center" class="post-count">
+            📝：599 字 | 🕝：2分钟
+        </div>
+      
+        <h2 id="Questions"><a href="#Questions" class="headerlink" title="Questions"></a>Questions</h2><ul>
+<li><p>默认情况下，Netty服务端启动多少线程？何时启动？</p>
+</li>
+<li><p>如何解决jdk空轮询bug？</p>
+</li>
+<li><p>Netty如何保证异步串行无锁化？</p>
+<ul>
+<li>常见场景为拿到一个客户端channel，不需要对这个channel进行同步，直接进行多线程并发读写。</li>
+<li>另一个场景为ChannelHandler里的操作都是线程安全的，不需要进行同步。</li>
+</ul>
+</li>
+</ul>
+<h2 id="NioEventLoop创建"><a href="#NioEventLoop创建" class="headerlink" title="NioEventLoop创建"></a>NioEventLoop创建</h2><p>NioEventLoopGroup 是 NioEventLoop 的容器，前者提供了生成NioEventLoop的方法和设置io ration以及重建NioEventLoop的方法.</p>
+<ul>
+<li>赋值，默认是2倍cpu核数</li>
+</ul>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-11-083333.png" alt="image-20190911163332607"></p>
+<ul>
+<li><h4 id="创建线程执行器"><a href="#创建线程执行器" class="headerlink" title="创建线程执行器"></a>创建线程执行器</h4></li>
+</ul>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-11-083645.png" alt="image-20190911163645315"></p>
+<ul>
+<li>ThreadPerTaskExecutor <ul>
+<li>每次执行任务都会创建一个线程实体</li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-023553.png" alt="image-20190912103552770"></li>
+<li>NioEventLoop线程命名规则nioEventLoop-1-xx</li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-024045.png" alt="image-20190912104045326"></li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-024116.png" alt="image-20190912104115157"></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><h4 id="构造NioEventLoop"><a href="#构造NioEventLoop" class="headerlink" title="构造NioEventLoop"></a>构造NioEventLoop</h4></li>
+</ul>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-11-083755.png" alt="image-20190911163754956"></p>
+<ul>
+<li><p>newChild()构造nioEventLoop 最终为一个数组形式</p>
+<ul>
+<li><p>保存线程执行器</p>
+</li>
+<li><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-025115.png" alt="image-20190912105115006"></p>
+</li>
+<li><p>创建一个MpscQueue</p>
+<ul>
+<li>我们发现 <code>taskQueue</code>在NioEventLoop中默认是mpsc队列，mpsc队列，即多生产者单消费者队列，netty使用mpsc，方便的将外部线程的task聚集，在reactor线程内部用单线程来串行执行，我们可以借鉴netty的任务执行模式来处理类似多线程数据上报，定时聚合的应用</li>
+</ul>
+</li>
+<li><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-025248.png" alt="image-20190912105248151"></p>
+</li>
+<li><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-030716.png" alt="image-20190912105505357"></p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>创建一个selector</p>
+</li>
+<li><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-025330.png" alt="image-20190912105329935"></p>
+</li>
+</ul>
+<ul>
+<li><h4 id="创建线程选择器"><a href="#创建线程选择器" class="headerlink" title="创建线程选择器"></a>创建线程选择器</h4><ul>
+<li>为新连接绑定对应的nioEventLoop</li>
+</ul>
+</li>
+</ul>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-11-083821.png" alt="image-20190911163820590"></p>
+<ul>
+<li>newchooser() 循环取数组下标的一个操作<ul>
+<li>判断isPowerOfTwo（）是进行优化，不是不进行优化</li>
+<li>优化 （&amp; 是一个二进制操作）</li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-032054.png" alt="image-20190912112053480"></li>
+<li>未优化（% 是一个复杂的操作）</li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-032127.png" alt="image-20190912112126642"></li>
+</ul>
+</li>
+</ul>
+<h2 id="NioEventLoop启动"><a href="#NioEventLoop启动" class="headerlink" title="NioEventLoop启动"></a>NioEventLoop启动</h2><h4 id="服务端启动绑定端口"><a href="#服务端启动绑定端口" class="headerlink" title="服务端启动绑定端口"></a>服务端启动绑定端口</h4><ul>
+<li><p>入口：bind()-&gt;execute(task)</p>
+</li>
+<li><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-055922.png" alt="image-20190912135922405"></p>
+<ul>
+<li>这里的bind() 线程是绑定端口和增加监听器的一个线程</li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-060056.png" alt="image-20190912140055238"></li>
+<li>判断执行execute()的线程是否是nioEventLoop的线程，不是则通过Cas方法创建</li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-060301.png" alt="image-20190912140301404"></li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-060357.png" alt="image-20190912140356848"></li>
+<li>这里的executor其实就是前文的ThreadPerTaskExecutor</li>
+<li>run()方法启动</li>
+<li><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-064953.png" alt="image-20190912144952731"></li>
+</ul>
+</li>
+<li><h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4></li>
+</ul>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-060608.png" alt="image-20190912140608031"></p>
+<p>主线程最终调用bind()-&gt; bind()会把实际绑定的流程封装为一个task-&gt;调用服务端channel 的execute()具体执行-&gt;netty 会判断调用executor的方法是不是nio线程-&gt; 如果不是，调用doStartThread()去创建线程，然后把当前的线程赋值，nioEventLoop 会把当前的线程进行保存，最后调用run()进行启动</p>
+<h4 id="新链接接入"><a href="#新链接接入" class="headerlink" title="新链接接入"></a>新链接接入</h4><h2 id="NioEventLoop执行流程"><a href="#NioEventLoop执行流程" class="headerlink" title="NioEventLoop执行流程"></a>NioEventLoop执行流程</h2><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-065107.png" alt="image-20190912145107423"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-12-065146.png" alt="image-20190912145145589"></p>
+<ul>
+<li><h3 id="select-检查是否有io事件"><a href="#select-检查是否有io事件" class="headerlink" title="select() 检查是否有io事件"></a>select() 检查是否有io事件</h3><ul>
+<li>deadLine以及任务穿插逻辑处理 </li>
+<li>阻塞式的select</li>
+<li>避免nio Selector空轮询bug</li>
+</ul>
+</li>
+<li><h3 id="processSelectedKeys-处理io事件"><a href="#processSelectedKeys-处理io事件" class="headerlink" title="processSelectedKeys()处理io事件"></a>processSelectedKeys()处理io事件</h3></li>
+<li><h3 id="runAllTasks-处理异步任务队列"><a href="#runAllTasks-处理异步任务队列" class="headerlink" title="runAllTasks()处理异步任务队列"></a>runAllTasks()处理异步任务队列</h3></li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/gavin.github.io/2019/09/12/【netty源码笔记】NioEventLoop/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/gavin.github.io/page/2/">2</a><a class="page-number" href="/gavin.github.io/page/3/">3</a><a class="page-number" href="/gavin.github.io/page/4/">4</a><a class="extend next" rel="next" href="/gavin.github.io/page/2/">Next &raquo;</a>
+    </nav>
   
 
 
@@ -1101,15 +1341,51 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">实现模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Java基础</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">重构</a>
+                <a href="javascript:void(0)" class="js-tag color2">SpringCloud</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">SpringSecurity</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">docker</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">实现模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">高可用架构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码与设计模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">缓存</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">函数式编程</a>
               </li>
             
             <div class="clearfix"></div>
