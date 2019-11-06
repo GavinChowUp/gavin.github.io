@@ -87,7 +87,7 @@
 		</nav>
 
 		<nav class="nav-total">
-				文章 25    字数 <span class="post-count">17.4k</span>
+				文章 24    字数 <span class="post-count">16.6k</span>
 		</nav>
 	
 	</header>		
@@ -206,7 +206,7 @@
 <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-112801.png" alt="image-20191022192800871"></p>
 <h4 id="插件设置"><a href="#插件设置" class="headerlink" title="插件设置"></a>插件设置</h4><p><strong>Preferences | Build, Execution, Deployment | docker</strong> 下设置</p>
 <p>具体设置如下：</p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-112921.png" alt="image-20191022192921334"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-11-06-074629.png" alt="image-20191106154628478"></p>
 <p>看到 Connection successful 即为成功</p>
 <h2 id="前期项目配置准备"><a href="#前期项目配置准备" class="headerlink" title="前期项目配置准备"></a>前期项目配置准备</h2><h3 id="修改配置："><a href="#修改配置：" class="headerlink" title="修改配置："></a>修改配置：</h3><ul>
 <li>application-test.yml - &gt; token-url-list 修改，一般修改为实际ip,勿用回环地址</li>
@@ -219,7 +219,7 @@
 <p>如下所示，本人docker 环境有3个，双击进入docker-compose.yml</p>
 <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-115134.png" alt="image-20191022195133798"></p>
 <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113345.png" alt="image-20191022193344265"></p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113408.png" alt="image-20191022193407597"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-11-06-074533.png" alt="image-20191106154533029"></p>
 <p>点击上图所示箭头，即可将镜像打到不同的docker环境</p>
 <p><strong>注：docker 镜像一般较大，会存在网络io,建议留1-2天时间部署调试。</strong></p>
 <p>当看到如下内容，说明镜像部署成功,docker-compose会自动拉起容器，并启动</p>
@@ -281,20 +281,20 @@
 
 
   
-    <article id="post-【SpringSecurity】关于TokenStore及Token有效期" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【SpringSecurity】Oauth2协议简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/">【SpringSecurity】关于TokenStore及Token有效期</a>
+      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">【SpringSecurity】Oauth协议简介</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/" class="archive-article-date">
-  	<time datetime="2019-10-09T01:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-10-09</time>
+        <a href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/" class="archive-article-date">
+  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
 </a>
         
       </header>
@@ -305,45 +305,21 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/">【SpringSecurity】关于TokenStore及Token有效期</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">【SpringSecurity】Oauth协议简介</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：712 字 | 🕝：2分钟
+            📝：32 字 | 🕝：1分钟
         </div>
       
-        <h2 id="抛出问题"><a href="#抛出问题" class="headerlink" title="抛出问题"></a>抛出问题</h2><p>今天和业务同事沟通需求，原token 存储在redis中，重复登陆会返回相同的token，认为机制有点问题，故要求，登陆时返回不同的token，并且不要存在redis中。</p>
-<p>当时我的理解是，token 是有有效期的，存在于tokenStore 中，那么在每次访问接口的时候，都会有机制去校验这个token的时效性(从tokenStore中取)，我如果把redis 中的token 删除以后，重新登陆后，会不会重新获取一个token呢？如果不设置自定义的tokenStore，那么这个token 将会存在哪里？</p>
-<p>带着这个疑问，我将redis 的tokenStore 注释以后，我想，这下应该能揪出token 的小尾巴了吧。</p>
-<hr>
-<h2 id="TokenStore"><a href="#TokenStore" class="headerlink" title="TokenStore"></a>TokenStore</h2><h3 id="RedisTokenStore"><a href="#RedisTokenStore" class="headerlink" title="RedisTokenStore"></a>RedisTokenStore</h3><p>首先登陆，返回一个accessToken</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"access_token"</span>:<span class="string">"7e66a79e-35bc-46e3-98c7-8e616939fd0d"</span>,<span class="attr">"token_type"</span>:<span class="string">"bearer"</span>,<span class="attr">"refresh_token"</span>:<span class="string">"dfea4af7-d861-4d66-8c10-be7f4ab1655b"</span>,<span class="attr">"expires_in"</span>:<span class="number">43042</span>,<span class="attr">"scope"</span>:<span class="string">"server"</span>,<span class="attr">"license"</span>:<span class="string">"made by walrus"</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>然后在redis中 删除token，此时重新登陆，会颁发一个新的token</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"access_token"</span>:<span class="string">"63836269-70f6-4d8c-8b96-3d3203a1c3b3"</span>,<span class="attr">"token_type"</span>:<span class="string">"bearer"</span>,<span class="attr">"refresh_token"</span>:<span class="string">"e5a0f674-6985-4700-b9b9-35083be4634a"</span>,<span class="attr">"expires_in"</span>:<span class="number">43199</span>,<span class="attr">"scope"</span>:<span class="string">"server"</span>,<span class="attr">"license"</span>:<span class="string">"made by walrus"</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>从时间上就可以看出token 的有效期变长了。</p>
-<p>如果我们不删除这个token,重新登陆，我们来看看这个token 是什么样的？</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"access_token"</span>:<span class="string">"63836269-70f6-4d8c-8b96-3d3203a1c3b3"</span>,<span class="attr">"token_type"</span>:<span class="string">"bearer"</span>,<span class="attr">"refresh_token"</span>:<span class="string">"e5a0f674-6985-4700-b9b9-35083be4634a"</span>,<span class="attr">"expires_in"</span>:<span class="number">43098</span>,<span class="attr">"scope"</span>:<span class="string">"server"</span>,<span class="attr">"license"</span>:<span class="string">"made by walrus"</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>可以看出，我们重新登陆后，token有效期变短了，说明返回的还是原来的token，说明，在登陆的时候，会先看看tokenStore中是否有数据，如果有的话，会直接返回原来的数据，我们跟跟源码看看</p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-29-104932.png" alt="image-20190929184932555"></p>
-<p>可以看到，在创建token 的时候，会在tokenStore中先查一下，是否存在这个token，有的话，就把存在的token给又重新颁发了。</p>
-<p><strong>结论：只要tokenStore有，那个这个token就一直会颁发，直到过期</strong></p>
-<h3 id="默认的TokenStore是什么呢？"><a href="#默认的TokenStore是什么呢？" class="headerlink" title="默认的TokenStore是什么呢？"></a>默认的TokenStore是什么呢？</h3><p>我们在配置中，注释tokenStore</p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-29-105432.png" alt="image-20190929185432230"></p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-29-105721.png" alt="image-20190929185720831"></p>
-<p>可以看到，默认的TokenStore 是 InMemoryTokenStore。</p>
-<hr>
-<h2 id="如何满足小伙伴的需求呢？"><a href="#如何满足小伙伴的需求呢？" class="headerlink" title="如何满足小伙伴的需求呢？"></a>如何满足小伙伴的需求呢？</h2><p>前端统一传UserName,Password</p>
-<h3 id="方案1"><a href="#方案1" class="headerlink" title="方案1"></a>方案1</h3><p>先登录，然后通过登陆后获取的refresh_token 重新获取一个新的token。</p>
-<h3 id="方案2"><a href="#方案2" class="headerlink" title="方案2"></a>方案2</h3><p>先登陆，登陆后，从tokenStore中删除该token,然后重新登陆，再获取一个新的token。</p>
-<p>个人倾向于方案1，毕竟，更能说的过去，要是2次登陆，逻辑变扭。</p>
-<h3 id="方案3"><a href="#方案3" class="headerlink" title="方案3"></a>方案3</h3><p>重写一个tokenStore，将getAccessToken返回的数据置为空，目前测试，暂没有影响到业务</p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-29-112139.png" alt="image-20190929192139064"></p>
-<p>其实 refresh_token 还要比 正常的登陆要多走一步，这一步是设置了其refresh_token 的default scopes</p>
-<h2 id="Token的默认时间"><a href="#Token的默认时间" class="headerlink" title="Token的默认时间"></a>Token的默认时间</h2><p>token 的默认时间可以在数据库中设置，根据不同的clientId,现设置均为null,使用SpringSecurity 默认token 时间，为12小时，refresh_token 的默认时间为30天</p>
+        <h2 id="Oauth协议简介"><a href="#Oauth协议简介" class="headerlink" title="Oauth协议简介"></a>Oauth协议简介</h2><ul>
+<li>Oauth协议要解决的问题</li>
+<li>Oauth协议中的各种角色</li>
+<li>Oauth协议中的运行流程</li>
+</ul>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-16-022600.png" alt="image-20191016102600293"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-16-022616.png" alt="image-20191016102615280"></p>
 
       
 
@@ -367,7 +343,114 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-【SpringCloud】Restful 常用的拦截机制及使用场景" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        <!-- 
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">【SpringCloud】Restful 常用的拦截机制及使用场景</a>
+    </h1>
+  
+ -->
+        
+        <a href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/" class="archive-article-date">
+  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
+</a>
+        
+      </header>
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+        <!--  -->
+        <center><p>
+  
+    <h1 itemprop="name">
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">【SpringCloud】Restful 常用的拦截机制及使用场景</a>
+    </h1>
+  
+</p></center>
+        <div align="center" class="post-count">
+            📝：266 字 | 🕝：1分钟
+        </div>
+      
+        <h2 id="RestFul-的拦截机制"><a href="#RestFul-的拦截机制" class="headerlink" title="RestFul 的拦截机制"></a>RestFul 的拦截机制</h2><p>需求：实现接口请求耗时</p>
+<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-01-144328.png" alt="image-20191001224327588"></p>
+<p>如果加了Component 注解，则对所有的请求路径满足，如果不加，需要注册Bean 然后进行设置</p>
+<p><strong>注意：filter只能拿到http 的请求和响应，但是这个filter 是不知道 具体哪个 控制器，哪个方法去处理这个请求;</strong></p>
+<p><strong>如果我们需要这些信息的话，那么就需要拦截器去处理了</strong></p>
+<h3 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-005837.png" alt="image-20191002085836527"></p>
+<p>拦截器与filter 不同之处在于，拦截器还需要进行设置，才能起效。</p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-005916.png" alt="image-20191002085915905"></p>
+<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-021315.png" alt="image-20191002101315087"></p>
+<h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-014538.png" alt="image-20191002094538200" style="zoom:50%;">
+
+<p>其启动顺序如上图所示，最先进入 filter，然后是interceptor，然后是 aspect</p>
+<p>其日志如下：</p>
+<img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-021426.png" alt="image-20191002101426277" style="zoom:50%;">
+
+
+
+<h3 id="filter，intercepter-aop-的具体区别是什么呢？"><a href="#filter，intercepter-aop-的具体区别是什么呢？" class="headerlink" title="filter，intercepter,aop 的具体区别是什么呢？"></a>filter，intercepter,aop 的具体区别是什么呢？</h3><ul>
+<li>filter ，只能拿到request，response的原始的http请求，但是不知道具体是哪个类执行，哪个方法执行</li>
+<li>Intercepter ，相比于filter 可以拿到上述哪个类执行，哪个方法执行</li>
+<li>aop，可以拿到执行结果，更多的是面向切面的编程思想</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">展开全文 >></a>
         </p>
       
 
@@ -475,98 +558,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot 默认的异常处理机制及自定义异常处理机制/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【SpringSecurity】Oauth2协议简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        <!-- 
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">【SpringSecurity】Oauth协议简介</a>
-    </h1>
-  
- -->
-        
-        <a href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/" class="archive-article-date">
-  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
-</a>
-        
-      </header>
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-        <!--  -->
-        <center><p>
-  
-    <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">【SpringSecurity】Oauth协议简介</a>
-    </h1>
-  
-</p></center>
-        <div align="center" class="post-count">
-            📝：32 字 | 🕝：1分钟
-        </div>
-      
-        <h2 id="Oauth协议简介"><a href="#Oauth协议简介" class="headerlink" title="Oauth协议简介"></a>Oauth协议简介</h2><ul>
-<li>Oauth协议要解决的问题</li>
-<li>Oauth协议中的各种角色</li>
-<li>Oauth协议中的运行流程</li>
-</ul>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-16-022600.png" alt="image-20191016102600293"></p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-16-022616.png" alt="image-20191016102615280"></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">SpringSecurity</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/">展开全文 >></a>
         </p>
       
 
@@ -713,113 +704,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringCloud】Springboot中的事件发布及事务控制/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-【SpringCloud】Restful 常用的拦截机制及使用场景" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        <!-- 
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">【SpringCloud】Restful 常用的拦截机制及使用场景</a>
-    </h1>
-  
- -->
-        
-        <a href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/" class="archive-article-date">
-  	<time datetime="2019-09-28T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-28</time>
-</a>
-        
-      </header>
-    
-    
-    <div class="article-entry" itemprop="articleBody">
-        <!--  -->
-        <center><p>
-  
-    <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">【SpringCloud】Restful 常用的拦截机制及使用场景</a>
-    </h1>
-  
-</p></center>
-        <div align="center" class="post-count">
-            📝：266 字 | 🕝：1分钟
-        </div>
-      
-        <h2 id="RestFul-的拦截机制"><a href="#RestFul-的拦截机制" class="headerlink" title="RestFul 的拦截机制"></a>RestFul 的拦截机制</h2><p>需求：实现接口请求耗时</p>
-<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-01-144328.png" alt="image-20191001224327588"></p>
-<p>如果加了Component 注解，则对所有的请求路径满足，如果不加，需要注册Bean 然后进行设置</p>
-<p><strong>注意：filter只能拿到http 的请求和响应，但是这个filter 是不知道 具体哪个 控制器，哪个方法去处理这个请求;</strong></p>
-<p><strong>如果我们需要这些信息的话，那么就需要拦截器去处理了</strong></p>
-<h3 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-005837.png" alt="image-20191002085836527"></p>
-<p>拦截器与filter 不同之处在于，拦截器还需要进行设置，才能起效。</p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-005916.png" alt="image-20191002085915905"></p>
-<h3 id="切片"><a href="#切片" class="headerlink" title="切片"></a>切片</h3><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-021315.png" alt="image-20191002101315087"></p>
-<h3 id="启动顺序"><a href="#启动顺序" class="headerlink" title="启动顺序"></a>启动顺序</h3><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-014538.png" alt="image-20191002094538200" style="zoom:50%;">
-
-<p>其启动顺序如上图所示，最先进入 filter，然后是interceptor，然后是 aspect</p>
-<p>其日志如下：</p>
-<img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-02-021426.png" alt="image-20191002101426277" style="zoom:50%;">
-
-
-
-<h3 id="filter，intercepter-aop-的具体区别是什么呢？"><a href="#filter，intercepter-aop-的具体区别是什么呢？" class="headerlink" title="filter，intercepter,aop 的具体区别是什么呢？"></a>filter，intercepter,aop 的具体区别是什么呢？</h3><ul>
-<li>filter ，只能拿到request，response的原始的http请求，但是不知道具体是哪个类执行，哪个方法执行</li>
-<li>Intercepter ，相比于filter 可以拿到上述哪个类执行，哪个方法执行</li>
-<li>aop，可以拿到执行结果，更多的是面向切面的编程思想</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">SpringCloud</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/09/28/【SpringCloud】Restful 常用的拦截机制及使用场景/">展开全文 >></a>
         </p>
       
 
@@ -1042,6 +926,96 @@
 
 
   
+    <article id="post-【netty源码笔记】netty 服务端启动探究" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        <!-- 
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/">【netty源码笔记】(二)netty 服务端启动探究</a>
+    </h1>
+  
+ -->
+        
+        <a href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/" class="archive-article-date">
+  	<time datetime="2019-09-11T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
+</a>
+        
+      </header>
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+        <!--  -->
+        <center><p>
+  
+    <h1 itemprop="name">
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/">【netty源码笔记】(二)netty 服务端启动探究</a>
+    </h1>
+  
+</p></center>
+        <div align="center" class="post-count">
+            📝：698 字 | 🕝：2分钟
+        </div>
+      
+        <img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-11-025900.png" alt="image-20190911105900551">
+
+<center>（摄于2017年6月北京央视电视台）</center>
+        
+          <a class="article-more-a" href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/#more">more >></a>
+        
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">netty</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-【netty源码笔记】netty 对 socket 的抽象" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1131,20 +1105,20 @@
 
 
   
-    <article id="post-【netty源码笔记】netty 服务端启动探究" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【源码与设计模式】策略模式与模版方法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/">【netty源码笔记】(二)netty 服务端启动探究</a>
+      <a class="article-title" href="/gavin.github.io/2019/09/06/【源码与设计模式】策略模式与模版方法/">【源码与设计模式】策略模式与模版方法</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/" class="archive-article-date">
-  	<time datetime="2019-09-11T02:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-11</time>
+        <a href="/gavin.github.io/2019/09/06/【源码与设计模式】策略模式与模版方法/" class="archive-article-date">
+  	<time datetime="2019-09-06T08:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-06</time>
 </a>
         
       </header>
@@ -1155,20 +1129,29 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/">【netty源码笔记】(二)netty 服务端启动探究</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/06/【源码与设计模式】策略模式与模版方法/">【源码与设计模式】策略模式与模版方法</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：698 字 | 🕝：2分钟
+            📝：483 字 | 🕝：2分钟
         </div>
       
-        <img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-11-025900.png" alt="image-20190911105900551">
+        <h2 id="策略模式与模版方法"><a href="#策略模式与模版方法" class="headerlink" title="策略模式与模版方法"></a>策略模式与模版方法</h2><h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义:"></a>定义:</h4><p>定义一组算法，将每个算法都封装起来，并且使它们之间可以互换。</p>
+<h4 id="类图："><a href="#类图：" class="headerlink" title="类图："></a>类图：</h4><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-09-075746.png" alt="image-20190909155745815"></p>
+<h4 id="使用场景："><a href="#使用场景：" class="headerlink" title="使用场景："></a>使用场景：</h4><p>算法需要自由切换的场景</p>
+<h4 id="源码中的使用："><a href="#源码中的使用：" class="headerlink" title="源码中的使用："></a>源码中的使用：</h4><p>SpringSecurity 的认证过程，默认提供一个空策略，提供set方法，供客户端调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> * The <span class="class"><span class="keyword">class</span> <span class="title">has</span> <span class="title">an</span> <span class="title">optional</span> </span>&#123;<span class="meta">@link</span> SessionAuthenticationStrategy&#125; which will be invoked</span><br><span class="line"> * immediately after a successful call to &#123;<span class="meta">@code</span> attemptAuthentication()&#125;. Different</span><br><span class="line"> * implementations</span><br><span class="line"> * &#123;@link #setSessionAuthenticationStrategy(SessionAuthenticationStrategy) can be</span><br><span class="line"> * injected&#125; to enable things like session-fixation attack prevention or to control the</span><br><span class="line"> * number of simultaneous sessions a principal may have.</span><br><span class="line"> *</span><br><span class="line"> * <span class="meta">@author</span> Ben Alex</span><br><span class="line"> * <span class="meta">@author</span> Luke Taylor</span><br><span class="line"> </span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SessionAuthenticationStrategy</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * Performs Http session-related functionality when a new authentication occurs.</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> SessionAuthenticationException if it is decided that the authentication is</span></span><br><span class="line"><span class="comment">	 * not allowed for the session. This will typically be because the user has too many</span></span><br><span class="line"><span class="comment">	 * sessions open at once.</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">onAuthentication</span><span class="params">(Authentication authentication, HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">			HttpServletResponse response)</span> <span class="keyword">throws</span> SessionAuthenticationException</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<center>（摄于2017年6月北京央视电视台）</center>
-        
-          <a class="article-more-a" href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/#more">more >></a>
-        
+<hr>
+<h3 id="模版方法"><a href="#模版方法" class="headerlink" title="模版方法"></a>模版方法</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中</p>
+<p>“延迟”二字的体现，个人认为是abstract  method</p>
+<h4 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h4><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-09-072707.png" alt="image-20190909152706573"></p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景:"></a>使用场景:</h4><p>多个子类有公有的方法，并且逻辑基本相同时。</p>
+<h4 id="源码中的使用：-1"><a href="#源码中的使用：-1" class="headerlink" title="源码中的使用："></a>源码中的使用：</h4><p>SpringSecurity的认证过程，模版方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//注释可以看出，抽象算法认证过程</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Abstract processor of browser-based HTTP-based authentication requests.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Ben Alex</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Luke Taylor</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractAuthenticationProcessingFilter</span> <span class="keyword">extends</span> <span class="title">GenericFilterBean</span></span></span><br><span class="line"><span class="class">		<span class="keyword">implements</span> <span class="title">ApplicationEventPublisherAware</span>, <span class="title">MessageSourceAware</span> </span>&#123;</span><br><span class="line">	<span class="comment">//核心算法</span></span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doFilter</span><span class="params">(ServletRequest req, ServletResponse res, FilterChain chain)</span></span></span><br><span class="line"><span class="function">			<span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">		HttpServletRequest request = (HttpServletRequest) req;</span><br><span class="line">		HttpServletResponse response = (HttpServletResponse) res;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (!requiresAuthentication(request, response)) &#123;</span><br><span class="line">			chain.doFilter(request, response);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">			logger.debug(<span class="string">"Request is to process authentication"</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		Authentication authResult;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">try</span> &#123;</span><br><span class="line">			authResult = attemptAuthentication(request, response);</span><br><span class="line">			<span class="keyword">if</span> (authResult == <span class="keyword">null</span>) &#123;</span><br><span class="line">				<span class="comment">// return immediately as subclass has indicated that it hasn't completed</span></span><br><span class="line">				<span class="comment">// authentication</span></span><br><span class="line">				<span class="keyword">return</span>;</span><br><span class="line">			&#125;</span><br><span class="line">			sessionStrategy.onAuthentication(authResult, request, response);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (InternalAuthenticationServiceException failed) &#123;</span><br><span class="line">			logger.error(</span><br><span class="line">					<span class="string">"An internal error occurred while trying to authenticate the user."</span>,</span><br><span class="line">					failed);</span><br><span class="line">			unsuccessfulAuthentication(request, response, failed);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">catch</span> (AuthenticationException failed) &#123;</span><br><span class="line">			<span class="comment">// Authentication failed</span></span><br><span class="line">			unsuccessfulAuthentication(request, response, failed);</span><br><span class="line"></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Authentication success</span></span><br><span class="line">		<span class="keyword">if</span> (continueChainBeforeSuccessfulAuthentication) &#123;</span><br><span class="line">			chain.doFilter(request, response);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		successfulAuthentication(request, response, chain, authResult);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//需要子类实现的方法</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> Authentication <span class="title">attemptAuthentication</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">			HttpServletResponse response)</span> <span class="keyword">throws</span> AuthenticationException, IOException,</span></span><br><span class="line"><span class="function">			ServletException</span>;</span><br></pre></td></tr></table></figure>
+
+
       
 
       
@@ -1181,7 +1164,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">netty</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">源码与设计模式</a>
         		</li>
       		
 		</ul>
@@ -1191,7 +1174,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/09/11/【netty源码笔记】netty 服务端启动探究/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/09/06/【源码与设计模式】策略模式与模版方法/">展开全文 >></a>
         </p>
       
 
@@ -1420,15 +1403,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">netty</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实现模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码与设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1437,10 +1424,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码与设计模式</a>
               </li>
              
               <li class="article-tag-list-item">

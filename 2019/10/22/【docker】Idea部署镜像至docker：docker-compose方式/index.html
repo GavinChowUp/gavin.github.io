@@ -18,17 +18,17 @@
 <meta property="og:locale" content="zh-CH">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-061942.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-112801.png">
-<meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-112921.png">
+<meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-11-06-074629.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-114218.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-114229.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-115134.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113345.png">
-<meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113408.png">
+<meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-11-06-074533.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113637.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113748.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113856.png">
 <meta property="og:image" content="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-114403.png">
-<meta property="og:updated_time" content="2019-10-22T12:20:43.196Z">
+<meta property="og:updated_time" content="2019-11-06T07:46:32.943Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="【docker】Idea部署镜像至docker：docker-compose方式">
 <meta name="twitter:description" content="前期插件准备 Docker 安装 Docker-compose 安装 (Mac 系统安装 docker 后自带，忽略) Idea 及 docker 插件 idea 要求 2019.2.3 + （ 2018.2 版本会有docker 插件 bug 踩坑）   Maven 3+   docker 安装https://www.runoob.com/docker/centos-docker-install">
@@ -105,7 +105,7 @@
 		</nav>
 
 		<nav class="nav-total">
-				文章 25    字数 <span class="post-count">17.4k</span>
+				文章 24    字数 <span class="post-count">16.6k</span>
 		</nav>
 	
 	</header>		
@@ -222,7 +222,7 @@
 <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-112801.png" alt="image-20191022192800871"></p>
 <h4 id="插件设置"><a href="#插件设置" class="headerlink" title="插件设置"></a>插件设置</h4><p><strong>Preferences | Build, Execution, Deployment | docker</strong> 下设置</p>
 <p>具体设置如下：</p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-112921.png" alt="image-20191022192921334"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-11-06-074629.png" alt="image-20191106154628478"></p>
 <p>看到 Connection successful 即为成功</p>
 <h2 id="前期项目配置准备"><a href="#前期项目配置准备" class="headerlink" title="前期项目配置准备"></a>前期项目配置准备</h2><h3 id="修改配置："><a href="#修改配置：" class="headerlink" title="修改配置："></a>修改配置：</h3><ul>
 <li>application-test.yml - &gt; token-url-list 修改，一般修改为实际ip,勿用回环地址</li>
@@ -235,7 +235,7 @@
 <p>如下所示，本人docker 环境有3个，双击进入docker-compose.yml</p>
 <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-115134.png" alt="image-20191022195133798"></p>
 <p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113345.png" alt="image-20191022193344265"></p>
-<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-10-22-113408.png" alt="image-20191022193407597"></p>
+<p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-11-06-074533.png" alt="image-20191106154533029"></p>
 <p>点击上图所示箭头，即可将镜像打到不同的docker环境</p>
 <p><strong>注：docker 镜像一般较大，会存在网络io,建议留1-2天时间部署调试。</strong></p>
 <p>当看到如下内容，说明镜像部署成功,docker-compose会自动拉起容器，并启动</p>
@@ -349,8 +349,8 @@
 <nav id="article-nav">
   
   
-    <a href="/gavin.github.io/2019/10/09/【SpringSecurity】关于TokenStore及Token有效期/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">【SpringSecurity】关于TokenStore及Token有效期</div>
+    <a href="/gavin.github.io/2019/09/28/【SpringSecurity】Oauth2协议简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">【SpringSecurity】Oauth协议简介</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -501,15 +501,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">netty</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">docker</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">netty</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">实现模式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码与设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -518,10 +522,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码与设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
