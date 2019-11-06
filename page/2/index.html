@@ -459,19 +459,19 @@
 
 
   
-    <article id="post-【缓存】缓存双写一致性的问题及解决" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【缓存】Redis的线程模型及支持高并发的原因" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/09/05/【缓存】缓存双写一致性的问题及解决/">【缓存】缓存双写一致性的问题及解决</a>
+      <a class="article-title" href="/gavin.github.io/2019/09/05/【缓存】Redis的线程模型及支持高并发的原因/">【缓存】Redis的线程模型及支持高并发的原因</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/09/05/【缓存】缓存双写一致性的问题及解决/" class="archive-article-date">
+        <a href="/gavin.github.io/2019/09/05/【缓存】Redis的线程模型及支持高并发的原因/" class="archive-article-date">
   	<time datetime="2019-09-05T06:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-05</time>
 </a>
         
@@ -483,19 +483,21 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/05/【缓存】缓存双写一致性的问题及解决/">【缓存】缓存双写一致性的问题及解决</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/05/【缓存】Redis的线程模型及支持高并发的原因/">【缓存】Redis的线程模型及支持高并发的原因</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：139 字 | 🕝：1分钟
+            📝：111 字 | 🕝：1分钟
         </div>
       
-        <h2 id="缓存双写一致性-初级"><a href="#缓存双写一致性-初级" class="headerlink" title="缓存双写一致性(初级)"></a>缓存双写一致性(初级)</h2><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-17-055127.png" alt="image-20190917135127212"></p>
-<p>在并发量不高的情况下，按照正确的流程即可解决问题。</p>
-<h2 id="缓存双写一致性-高并发"><a href="#缓存双写一致性-高并发" class="headerlink" title="缓存双写一致性(高并发)"></a>缓存双写一致性(高并发)</h2><h3 id="优化前"><a href="#优化前" class="headerlink" title="优化前"></a>优化前</h3><h3 id><a href="#" class="headerlink" title></a><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-17-055152.png" alt="image-20190917135152632"></h3><h3 id="优化后"><a href="#优化后" class="headerlink" title="优化后"></a>优化后</h3><p>优化点：短时间过来很多读请求，是否需要把这些读请求都压到队列中呢？读请求不能夯住的时间不能太长，造成读请求的长时阻塞，，这时要根据的业务进行测试</p>
-<p>实际是没有必要的</p>
-<p>TP99:99% 的请求能够在200ms内能够返回就不错</p>
+        <h2 id="Redis-的一次通信过程"><a href="#Redis-的一次通信过程" class="headerlink" title="Redis 的一次通信过程"></a>Redis 的一次通信过程</h2><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-05-071626.png" alt="image-20190905151625767"></p>
+<h2 id="Redis单线程支持高并发的原因"><a href="#Redis单线程支持高并发的原因" class="headerlink" title="Redis单线程支持高并发的原因"></a>Redis单线程支持高并发的原因</h2><ul>
+<li>纯内存操作。</li>
+<li>核心是基于非阻塞的 IO 多路复用机制。</li>
+<li>C 语言实现，一般来说，C 语言实现的程序“距离”操作系统更近，执行速度相对会更快。</li>
+<li>单线程反而避免了多线程的频繁上下文切换问题，预防了多线程可能产生的竞争问题。</li>
+</ul>
 
       
 
@@ -519,7 +521,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/09/05/【缓存】缓存双写一致性的问题及解决/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/09/05/【缓存】Redis的线程模型及支持高并发的原因/">展开全文 >></a>
         </p>
       
 
@@ -643,19 +645,19 @@
 
 
   
-    <article id="post-【缓存】Redis的线程模型及支持高并发的原因" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-【缓存】缓存双写一致性的问题及解决" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         <!-- 
   
     <h1 itemprop="name">
-      <a class="article-title" href="/gavin.github.io/2019/09/05/【缓存】Redis的线程模型及支持高并发的原因/">【缓存】Redis的线程模型及支持高并发的原因</a>
+      <a class="article-title" href="/gavin.github.io/2019/09/05/【缓存】缓存双写一致性的问题及解决/">【缓存】缓存双写一致性的问题及解决</a>
     </h1>
   
  -->
         
-        <a href="/gavin.github.io/2019/09/05/【缓存】Redis的线程模型及支持高并发的原因/" class="archive-article-date">
+        <a href="/gavin.github.io/2019/09/05/【缓存】缓存双写一致性的问题及解决/" class="archive-article-date">
   	<time datetime="2019-09-05T06:18:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-09-05</time>
 </a>
         
@@ -667,21 +669,19 @@
         <center><p>
   
     <h1 itemprop="name">
-      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/05/【缓存】Redis的线程模型及支持高并发的原因/">【缓存】Redis的线程模型及支持高并发的原因</a>
+      <a class="article-title_code_ant" href="/gavin.github.io/2019/09/05/【缓存】缓存双写一致性的问题及解决/">【缓存】缓存双写一致性的问题及解决</a>
     </h1>
   
 </p></center>
         <div align="center" class="post-count">
-            📝：111 字 | 🕝：1分钟
+            📝：139 字 | 🕝：1分钟
         </div>
       
-        <h2 id="Redis-的一次通信过程"><a href="#Redis-的一次通信过程" class="headerlink" title="Redis 的一次通信过程"></a>Redis 的一次通信过程</h2><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-05-071626.png" alt="image-20190905151625767"></p>
-<h2 id="Redis单线程支持高并发的原因"><a href="#Redis单线程支持高并发的原因" class="headerlink" title="Redis单线程支持高并发的原因"></a>Redis单线程支持高并发的原因</h2><ul>
-<li>纯内存操作。</li>
-<li>核心是基于非阻塞的 IO 多路复用机制。</li>
-<li>C 语言实现，一般来说，C 语言实现的程序“距离”操作系统更近，执行速度相对会更快。</li>
-<li>单线程反而避免了多线程的频繁上下文切换问题，预防了多线程可能产生的竞争问题。</li>
-</ul>
+        <h2 id="缓存双写一致性-初级"><a href="#缓存双写一致性-初级" class="headerlink" title="缓存双写一致性(初级)"></a>缓存双写一致性(初级)</h2><p><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-17-055127.png" alt="image-20190917135127212"></p>
+<p>在并发量不高的情况下，按照正确的流程即可解决问题。</p>
+<h2 id="缓存双写一致性-高并发"><a href="#缓存双写一致性-高并发" class="headerlink" title="缓存双写一致性(高并发)"></a>缓存双写一致性(高并发)</h2><h3 id="优化前"><a href="#优化前" class="headerlink" title="优化前"></a>优化前</h3><h3 id><a href="#" class="headerlink" title></a><img src="http://gavin-ipic.oss-cn-beijing.aliyuncs.com/2019-09-17-055152.png" alt="image-20190917135152632"></h3><h3 id="优化后"><a href="#优化后" class="headerlink" title="优化后"></a>优化后</h3><p>优化点：短时间过来很多读请求，是否需要把这些读请求都压到队列中呢？读请求不能夯住的时间不能太长，造成读请求的长时阻塞，，这时要根据的业务进行测试</p>
+<p>实际是没有必要的</p>
+<p>TP99:99% 的请求能够在200ms内能够返回就不错</p>
 
       
 
@@ -705,7 +705,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/gavin.github.io/2019/09/05/【缓存】Redis的线程模型及支持高并发的原因/">展开全文 >></a>
+          <a class="article-more-a" href="/gavin.github.io/2019/09/05/【缓存】缓存双写一致性的问题及解决/">展开全文 >></a>
         </p>
       
 
@@ -1287,15 +1287,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">源码与设计模式</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">高可用架构</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">消息队列</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">源码与设计模式</a>
               </li>
              
               <li class="article-tag-list-item">
